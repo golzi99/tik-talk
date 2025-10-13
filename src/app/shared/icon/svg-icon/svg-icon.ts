@@ -3,12 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'svg-icon',
   imports: [],
-  template: ` <svg
-    [attr.width]="size"
-    [attr.height]="size"
-    viewBox="0 0 16 16"
-    fill="none"
-  >
+  template: ` <svg [attr.width]="size" [attr.height]="size" viewBox="0 0 16 16">
     <use [attr.href]="href" />
   </svg>`,
   styles: [''],
