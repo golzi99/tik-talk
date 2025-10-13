@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { ProfileHeader } from '../../shared/components/profile-header/profile-header';
-import { ProfileService } from '../../api/services/profile/profile-service';
+import { ProfileService } from '../../data/services/profile/profile-service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { async, switchMap } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
 import { SvgIcon } from '../../shared/icon/svg-icon/svg-icon';
-import { ImgUrlPipe } from '../../utils/pipes/img-url-pipe';
+import { ImgUrlPipe } from '../../helpers/pipes/img-url-pipe';
 
 @Component({
   selector: 'app-profile-page',

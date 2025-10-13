@@ -1,13 +1,13 @@
 import { FormControl } from '@angular/forms';
 
 export interface AuthForm {
-  username: FormControl<string | undefined>;
-  password: FormControl<string | undefined>;
+  username: FormControl<string | null>;
+  password: FormControl<string | null>;
 }
 
 export interface Auth {
-  username: string | undefined;
-  password: string | undefined;
+  username: string | null;
+  password: string | null;
 }
 
 export interface TokenResponse {

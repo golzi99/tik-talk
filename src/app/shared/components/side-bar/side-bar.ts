@@ -2,11 +2,11 @@ import { Component, inject } from '@angular/core';
 import { SvgIcon } from '../../icon/svg-icon/svg-icon';
 import { SubscriberCard } from './subscriber-card/subscriber-card';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ProfileService } from '../../../api/services/profile/profile-service';
+import { ProfileService } from '../../../data/services/profile/profile-service';
 import { AsyncPipe } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
-import { ImgUrlPipe } from '../../../utils/pipes/img-url-pipe';
-import { AuthService } from '../../../api/services/auth/auth-service';
+import { ImgUrlPipe } from '../../../helpers/pipes/img-url-pipe';
+import { AuthService } from '../../../auth/auth-service';
 
 @Component({
   selector: 'app-side-bar',

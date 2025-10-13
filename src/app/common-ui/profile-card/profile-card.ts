@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
-import { Profile } from '../../../api/services/profile/profile.interface';
-import { ImgUrlPipe } from '../../../utils/pipes/img-url-pipe';
+import { Profile } from '../../data/interfaces/profile.interface';
+import { ImgUrlPipe } from '../../helpers/pipes/img-url-pipe';
 
 @Component({
   selector: 'app-profile-card',

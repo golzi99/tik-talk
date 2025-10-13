@@ -16,24 +16,22 @@ export class AuthService {
   token: string | null = null;
   refreshToken: string | null = null;
 
-  baseApiUrl = 'https://icherniakov.ru/yt-course/';
+  baseApiUrl = 'https://icherniakov.ru/yt-course/auth/';
 
   login(payload: Partial<Auth>) {
     const fd = new FormData();
     fd.append('username', payload.username ?? '');
     fd.append('password', payload.password ?? '');
-    return this.http
-      .post<TokenResponse>(`${this.baseApiUrl}auth/token`, fd)
-      .pipe(
-        tap((val) => {
-          this.saveTokens(val);
-        }),
-      );
+    return this.http.post<TokenResponse>(`${this.baseApiUrl}token`, fd).pipe(
+      tap((val) => {
+        this.saveTokens(val);
+      }),
+    );
   }
 
   refreshAuthToken() {
     return this.http
-      .post<TokenResponse>(`${this.baseApiUrl}auth/refresh`, {
+      .post<TokenResponse>(`${this.baseApiUrl}refresh`, {
         refresh_token: this.refreshToken,
       })
       .pipe(

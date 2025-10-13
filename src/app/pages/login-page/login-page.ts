@@ -5,8 +5,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { AuthService } from '../../api/services/auth/auth-service';
-import { AuthForm } from '../../api/services/auth/auth-interface';
+import { AuthService } from '../../auth/auth-service';
+import { AuthForm } from '../../auth/auth-interface';
 import { Router } from '@angular/router';
 
 @Component({
@@ -23,13 +23,11 @@ export class LoginPage {
   isPasswordVisible = signal<boolean>(false);
 
   form = new FormGroup<AuthForm>({
-    username: new FormControl('', {
+    username: new FormControl(null, {
       validators: [Validators.required],
-      nonNullable: true,
     }),
-    password: new FormControl('', {
+    password: new FormControl(null, {
       validators: [Validators.required],
-      nonNullable: true,
     }),
   });
 
