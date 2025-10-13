@@ -1,0 +1,6 @@
+<img
+  [src]="profile.avatarUrl ? (profile.avatarUrl | imgUrl) : '/assets/imgs/placeholder-avatar.svg'"
+  alt="avatar"
+  class="subscriber-avatar"
+/>
+<strong class="subtitle">{{ profile.firstName }} {{ profile.lastName }}</strong>
