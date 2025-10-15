@@ -1,0 +1,41 @@
+import { Component, inject, signal } from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { AuthService } from '../../auth/auth-service';
+import { AuthForm } from '../../auth/auth-interface';
+import { Router } from '@angular/router';
+import { SvgIcon } from '../../common-ui/svg-icon/svg-icon.component';
+
+@Component({
+  selector: 'app-login-page',
+  imports: [ReactiveFormsModule, SvgIcon],
+  templateUrl: './login-page.component.html',
+  standalone: true,
+  styleUrl: './login-page.component.scss',
+})
+export class LoginPage {
+  authService = inject(AuthService);
+  router = inject(Router);
+
+  isPasswordVisible = signal<boolean>(false);
+
+  form = new FormGroup<AuthForm>({
+    username: new FormControl(null, {
+      validators: [Validators.required],
+    }),
+    password: new FormControl(null, {
+      validators: [Validators.required],
+    }),
+  });
+
+  onSubmit() {
+    if (this.form.valid)
+      this.authService.login(this.form.value).subscribe(() => {
+        this.router.navigate(['/']);
+      });
+  }
+}

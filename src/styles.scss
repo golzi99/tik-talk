@@ -18,6 +18,14 @@
   padding: 0;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #1e1e1e inset; /* свой цвет фона */
+  -webkit-text-fill-color: #fff; /* цвет текста */
+  transition: background-color 5000s ease-in-out 0s; /* хак против мерцания */
+}
+
 ul {
   list-style: none;
 }
@@ -79,6 +87,7 @@ body {
 
 .h4 {
   font-size: 24px;
+  font-style: normal;
   line-height: 32px;
   font-weight: 800;
 }
@@ -128,4 +137,5 @@ body {
   line-height: 21px;
   font-family: "JetBrains Mono", sans-serif;
   color: var(--light-color);
+  margin-top: 8px;
 }

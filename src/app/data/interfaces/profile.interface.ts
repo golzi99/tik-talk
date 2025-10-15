@@ -1,5 +1,3 @@
-import { Pageble } from '../../shared/interfaces/pageble';
-
 export interface Profile {
   id: number;
   username: string;
