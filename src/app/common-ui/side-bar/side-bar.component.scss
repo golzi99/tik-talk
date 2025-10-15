@@ -128,6 +128,8 @@
     grid-gap: 16px;
 
     .setting-item {
+      text-decoration: none;
+      color: inherit;
       cursor: pointer;
       display: flex;
       align-items: center;

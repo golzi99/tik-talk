@@ -17,7 +17,7 @@ import { SvgIcon } from '../../common-ui/svg-icon/svg-icon.component';
   standalone: true,
   styleUrl: './login-page.component.scss',
 })
-export class LoginPage {
+export class LoginPageComponent {
   authService = inject(AuthService);
   router = inject(Router);
 

@@ -10,7 +10,7 @@ import { ProfileCard } from '../../common-ui/profile-card/profile-card.component
   standalone: true,
   styleUrl: './search-page.component.scss',
 })
-export class SearchPage {
+export class SearchPageComponent {
   profileService = inject(ProfileService);
   profiles: Profile[] = [];
 

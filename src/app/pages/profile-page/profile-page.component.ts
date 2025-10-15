@@ -7,15 +7,23 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
 import { SvgIcon } from '../../common-ui/svg-icon/svg-icon.component';
 import { ImgUrlPipe } from '../../helpers/pipes/img-url-pipe';
+import { PostFeedComponent } from './post-feed/post-feed.component';
 
 @Component({
   selector: 'app-profile-page',
-  imports: [ProfileHeader, AsyncPipe, SvgIcon, RouterLink, ImgUrlPipe],
+  imports: [
+    ProfileHeader,
+    AsyncPipe,
+    SvgIcon,
+    RouterLink,
+    ImgUrlPipe,
+    PostFeedComponent,
+  ],
   templateUrl: './profile-page.component.html',
   standalone: true,
   styleUrl: './profile-page.component.scss',
 })
-export class ProfilePage {
+export class ProfilePageComponent {
   profileService = inject(ProfileService);
   router = inject(ActivatedRoute);
 

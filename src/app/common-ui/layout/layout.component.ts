@@ -9,4 +9,4 @@ import { SideBar } from '../side-bar/side-bar.component';
   standalone: true,
   styleUrl: './layout.component.scss',
 })
-export class Layout {}
+export class LayoutComponent {}
