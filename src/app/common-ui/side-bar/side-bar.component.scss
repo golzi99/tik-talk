@@ -22,10 +22,6 @@
   grid-gap: 8px;
 }
 
-.menu-link {
-  text-decoration: none;
-}
-
 .menu-item {
   width: 100%;
   display: grid;
@@ -37,6 +33,7 @@
   border: none;
   background: none;
   font-weight: 700;
+  text-decoration: none;
   font-size: 14px;
   line-height: 24px;
   color: var(--light-color);
@@ -49,6 +46,7 @@
     color: var(--light-color);
   }
 
+  &.active__link,
   &:hover,
   &:focus-visible {
     background: var(--dark-hover-color);
@@ -57,12 +55,6 @@
     .icon {
       color: var(--primary-color);
     }
-  }
-}
-
-.menu-link.active__link {
-  .menu-item {
-    background-color: (var(--dark-hover-color));
   }
 }
 

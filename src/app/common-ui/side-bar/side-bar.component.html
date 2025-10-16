@@ -10,13 +10,11 @@
         <li>
           <a
             [routerLink]="menuItem.link"
-            class="menu-link"
+            class="menu-item"
             routerLinkActive="active__link"
           >
-            <button class="menu-item">
-              <svg-icon [icon]="menuItem.icon" class="icon" />
-              <span>{{ menuItem.label }}</span>
-            </button>
+            <svg-icon [icon]="menuItem.icon" class="icon" />
+            <span>{{ menuItem.label }}</span>
           </a>
         </li>
       }
