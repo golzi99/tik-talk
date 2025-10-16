@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, inject, ViewChild } from '@angular/core';
 import { ProfileHeader } from '../../common-ui/profile-header/profile-header.component';
 import {
   FormControl,
@@ -8,15 +8,18 @@ import {
 } from '@angular/forms';
 import { ProfileService } from '../../data/services/profile/profile-service';
 import { firstValueFrom } from 'rxjs';
+import { AvatarUploadComponent } from './avatar-upload/avatar-upload.component';
 
 @Component({
   selector: 'app-settings-page',
-  imports: [ProfileHeader, ReactiveFormsModule],
+  imports: [ProfileHeader, ReactiveFormsModule, AvatarUploadComponent],
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.scss',
 })
 export class SettingsPageComponent {
   profileService = inject(ProfileService);
+
+  @ViewChild(AvatarUploadComponent) avatarUploader!: AvatarUploadComponent;
 
   form = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
@@ -45,6 +48,11 @@ export class SettingsPageComponent {
 
     if (this.form.invalid) return;
 
+    if (this.avatarUploader.avatar) {
+      firstValueFrom(
+        this.profileService.uploadAvatar(this.avatarUploader.avatar),
+      );
+    }
     //@ts-ignore
     firstValueFrom(
       //@ts-ignore
