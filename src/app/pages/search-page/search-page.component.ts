@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { ProfileService } from '../../data/services/profile/profile-service';
-import { Profile } from '../../data/interfaces/profile.interface';
 import { ProfileCard } from '../../common-ui/profile-card/profile-card.component';
 import { ProfileFiltersComponent } from './profile-filters/profile-filters.component';
 

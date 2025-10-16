@@ -5,4 +5,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
   grid-gap: 40px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }

@@ -1,9 +1,13 @@
 :host {
   display: grid;
+  grid-template-rows: auto 1fr;
+  height: calc(100vh - (24px * 2));
   grid-gap: 20px;
 }
 
 .profile-card__wrapper {
   display: grid;
   grid-gap: 8px;
+  overflow-y: auto;
+  padding-right: 8px;
 }
