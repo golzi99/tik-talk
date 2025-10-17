@@ -1,11 +1,7 @@
 @if (profile(); as profile) {
-<img
-  [src]="profile.avatarUrl ? (profile.avatarUrl | imgUrl) : '/assets/imgs/placeholder-avatar.svg'"
-  class="avatar"
-  alt="avatar"
-/>
-<div class="user_name">
-  <h1 class="h4 mb4">{{profile.firstName}} {{profile.lastName}}</h1>
-  <span class="regular">{{profile.username}}</span>
-</div>
+  <app-avatar-circle [avatarUrl]="profile.avatarUrl"></app-avatar-circle>
+  <div class="user_name">
+    <h1 class="h4 mb4">{{ profile.firstName }} {{ profile.lastName }}</h1>
+    <span class="regular">{{ profile.username }}</span>
+  </div>
 }

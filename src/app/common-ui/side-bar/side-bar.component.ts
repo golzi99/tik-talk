@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { SvgIcon } from '../svg-icon/svg-icon.component';
 import { SubscriberCard } from './subscriber-card/subscriber-card.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ProfileService } from '../../data/services/profile/profile-service';
+import { ProfileService } from '../../data/services/profile.service';
 import { AsyncPipe } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 import { ImgUrlPipe } from '../../helpers/pipes/img-url-pipe';

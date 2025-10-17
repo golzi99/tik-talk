@@ -2,7 +2,7 @@ import { Component, effect, inject, signal } from '@angular/core';
 import { SvgIcon } from '../../../common-ui/svg-icon/svg-icon.component';
 import { DndDirective } from '../../../common-ui/derectives/dnd.directive';
 import { FormsModule } from '@angular/forms';
-import { ProfileService } from '../../../data/services/profile/profile-service';
+import { ProfileService } from '../../../data/services/profile.service';
 import { ImgUrlPipe } from '../../../helpers/pipes/img-url-pipe';
 
 @Component({

@@ -1,1 +1,36 @@
-<p>post-input works!</p>
+@if (profile(); as profile) {
+  <app-avatar-circle
+    class="size32 avatar"
+    [avatarUrl]="profile.avatarUrl"
+  ></app-avatar-circle>
+}
+<form [formGroup]="postForm" class="post-form" (ngSubmit)="onCreatePost()">
+  <div class="form__wrapper">
+    <label class="tt-form-label">
+      <span class="tt-form-label__text">Title</span>
+      <input
+        type="text"
+        class="tt-form-input"
+        formControlName="title"
+        placeholder="Title post"
+      />
+    </label>
+    <div class="textarea__wrapper">
+      <textarea
+        id="post_message"
+        class="hidden-textarea"
+        (input)="onTextAreaInput($event)"
+        placeholder=""
+        formControlName="content"
+      ></textarea>
+      @if (!text()) {
+        <label for="post_message" class="custom-placeholder">
+          Напишите что-нибудь
+        </label>
+      }
+    </div>
+  </div>
+  <button class="btn-icon" type="submit">
+    <svg-icon icon="send-message" viewBoxBase="0 0 15 12"></svg-icon>
+  </button>
+</form>

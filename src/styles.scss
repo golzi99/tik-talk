@@ -176,3 +176,21 @@ body {
   height: 84px;
   resize: none;
 }
+
+.btn-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--primary-color);
+  color: var(--dark-color);
+  border-radius: 4px;
+  border: 1px solid var(--dark-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.svg16 {
+  width: 16px;
+  height: 16px;
+}
