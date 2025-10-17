@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ProfileHeader } from '../../common-ui/profile-header/profile-header.component';
 import { ProfileService } from '../../data/services/profile/profile-service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { async, switchMap } from 'rxjs';
+import { async, map, switchMap } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
 import { SvgIcon } from '../../common-ui/svg-icon/svg-icon.component';
@@ -27,6 +27,8 @@ export class ProfilePageComponent {
   profileService = inject(ProfileService);
   router = inject(ActivatedRoute);
 
+  isMe$ = this.router.params.pipe(map((params) => params['id'] === 'me'));
+
   me$ = toObservable(this.profileService.me);
   subscribers$ = this.profileService.getSubscribersList(6);
 
@@ -36,5 +38,4 @@ export class ProfilePageComponent {
       return this.profileService.getAccount(id);
     }),
   );
-  protected readonly async = async;
 }

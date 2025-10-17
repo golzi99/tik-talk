@@ -1,10 +1,12 @@
 @if (profile$ | async; as profile) {
   <header class="profile-page__header">
     <app-profile-header [profile]="profile" />
-    <a class="btn setting_link" [routerLink]="['/settings']">
-      Редактировать
-      <svg-icon icon="settings" class="settings_icon" />
-    </a>
+    @if (isMe$ | async) {
+      <a class="btn setting_link" [routerLink]="['/settings']">
+        Редактировать
+        <svg-icon icon="settings" class="settings_icon" />
+      </a>
+    }
   </header>
   <main class="profile-page__body">
     <app-post-feed></app-post-feed>
