@@ -5,6 +5,7 @@
   display: grid;
   grid-template-columns: 32px 1fr;
   grid-gap: 16px;
+  max-height: 400px;
 }
 
 .post-body {

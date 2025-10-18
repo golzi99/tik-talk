@@ -1,7 +1,6 @@
 import {
   Component,
   ElementRef,
-  HostListener,
   inject,
   input,
   Renderer2,
@@ -22,7 +21,6 @@ import { FormsModule } from '@angular/forms';
 import { Profile } from '../../../data/interfaces/profile.interface';
 import { ActivatedRoute } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-post-feed',
@@ -55,11 +53,15 @@ export class PostFeedComponent {
   }
 
   constructor() {
-    firstValueFrom(this.postService.fetchPosts());
-    /* тут делать проверку страницы
-       Если не me, то нужно передать id в fetch и там прокинуть, чтобы по id
-       сделать запрос за постами
-    */
+    // firstValueFrom(this.postService.fetchPosts());
+    this.router.params.pipe(takeUntil(this.destroy$)).subscribe((params) => {
+      const id = params['id'];
+      // Если id — "me", можно подставить свой id из профиля
+      const userId = id === 'me' ? this.profile()?.id : +id;
+
+      // Обновляем посты
+      firstValueFrom(this.postService.fetchPosts(userId));
+    });
   }
 
   ngAfterViewInit() {
@@ -70,6 +72,11 @@ export class PostFeedComponent {
       .subscribe(() => {
         this.resizeFeed();
       });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   onCreatePost(textAreaValue: string) {

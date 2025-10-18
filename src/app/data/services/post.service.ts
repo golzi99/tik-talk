@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import {
   CommentCreateDto,
   Post,
@@ -17,7 +17,6 @@ export class PostService {
   baseApiUrl = 'https://icherniakov.ru/yt-course/';
 
   posts = signal<Post[]>([]);
-  // subsPosts = signal<Post[]>([]);
 
   createPost = (payload: PostCreateDto) => {
     return this.#http.post<Post>(`${this.baseApiUrl}post/`, payload).pipe(
@@ -27,12 +26,20 @@ export class PostService {
     );
   };
 
-  fetchPosts = () => {
-    return this.#http.get<Post[]>(`${this.baseApiUrl}post/`).pipe(
-      tap((res) => {
-        this.posts.set(res);
-      }),
-    );
+  fetchPosts = (userId?: number) => {
+    const params = userId
+      ? new HttpParams().set('user_id', userId?.toString())
+      : undefined;
+
+    return this.#http
+      .get<Post[]>(`${this.baseApiUrl}post/`, {
+        params,
+      })
+      .pipe(
+        tap((res) => {
+          this.posts.set(res);
+        }),
+      );
   };
 
   createComment = (payload: CommentCreateDto) => {
@@ -44,14 +51,4 @@ export class PostService {
       .get<Post>(`${this.baseApiUrl}post/${postId}`)
       .pipe(map((res) => res.comments));
   };
-
-  // fetchSubsPosts = () => {
-  //   return this.#http
-  //     .get<Post[]>(`${this.baseApiUrl}post/my_subscriptions/`)
-  //     .pipe(
-  //       tap((res) => {
-  //         this.subsPosts.set(res);
-  //       }),
-  //     );
-  // };
 }
