@@ -1,31 +1,68 @@
-import { Component, computed, inject, signal, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  input,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { PostInputComponent } from '../post-input/post-input.component';
 import { PostComponent } from '../post/post.component';
 import { PostService } from '../../../data/services/post.service';
-import { firstValueFrom } from 'rxjs';
-import { ProfileService } from '../../../data/services/profile.service';
+import { firstValueFrom, map } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { Profile } from '../../../data/interfaces/profile.interface';
+import { ActivatedRoute } from '@angular/router';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-post-feed',
-  imports: [PostInputComponent, PostComponent, FormsModule],
+  imports: [PostInputComponent, PostComponent, FormsModule, AsyncPipe],
   templateUrl: './post-feed.component.html',
   styleUrl: './post-feed.component.scss',
 })
 export class PostFeedComponent {
+  profile = input<Profile>();
+
   @ViewChild('postInputContent') childComponent!: PostInputComponent;
 
+  @HostListener('window:resize')
+  onWindowResize() {
+    this.resizeFeed();
+  }
+
   postService = inject(PostService);
+  router = inject(ActivatedRoute);
+  r2 = inject(Renderer2);
   feed = this.postService.posts;
-  profile = inject(ProfileService).me();
+
+  isMe$ = this.router.params.pipe(map((params) => params['id'] === 'me'));
 
   titleValue: string = '';
 
-  constructor() {
-    firstValueFrom(this.postService.fetchPosts());
+  hostElement = inject(ElementRef);
+
+  resizeFeed() {
+    const { top } = this.hostElement.nativeElement.getBoundingClientRect();
+
+    const height = window.innerHeight - top - 24;
+    this.r2.setStyle(this.hostElement.nativeElement, 'height', `${height}px`);
   }
 
-  onSend() {
+  constructor() {
+    firstValueFrom(this.postService.fetchPosts());
+    /* тут делать проверку страницы
+       Если не me, то нужно передать id в fetch и там прокинуть, чтобы по id
+       сделать запрос за постами
+    */
+  }
+
+  ngAfterViewInit() {
+    this.resizeFeed();
+  }
+
+  onCreatePost() {
     const content = this.childComponent.textAreaValue;
     const title = this.titleValue;
 
@@ -38,7 +75,7 @@ export class PostFeedComponent {
       this.postService.createPost({
         title,
         content,
-        authorId: this.profile?.id!,
+        authorId: this.profile()?.id!,
         communityId: 0,
       }),
     ).then(() => {

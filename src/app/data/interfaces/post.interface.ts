@@ -18,10 +18,10 @@ export interface Post {
   updatedAt: string;
   likes: number;
   likesUsers: string[];
-  comments: Comment[];
+  comments: PostComment[];
 }
 
-export interface Comment {
+export interface PostComment {
   id: number;
   text: string;
   author: Profile;
@@ -29,4 +29,11 @@ export interface Comment {
   commentId: number;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface CommentCreateDto {
+  text: string;
+  authorId: number;
+  postId: number;
+  commentId: number;
 }

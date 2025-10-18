@@ -5,7 +5,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ProfileService } from '../../data/services/profile.service';
 import { AsyncPipe } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
-import { ImgUrlPipe } from '../../helpers/pipes/img-url-pipe';
+import { ImgUrlPipe } from '../../helpers/pipes/img-url.pipe';
 import { AuthService } from '../../auth/auth-service';
 
 @Component({

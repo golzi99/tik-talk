@@ -1,1 +1,13 @@
-<p>comment works!</p>
+@if (comment(); as comment) {
+  <app-avatar-circle
+    class="size32"
+    [avatarUrl]="comment.author.avatarUrl"
+  ></app-avatar-circle>
+  <div class="comment-body">
+    <header class="comment-header">
+      <span>{{ comment.author.firstName }} {{ comment.author.lastName }}</span>
+      <span>{{ comment.createdAt | datePastTimePipe }}</span>
+    </header>
+    <div class="comment-text">{{ comment.text }}</div>
+  </div>
+}

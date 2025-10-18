@@ -2,11 +2,11 @@ import { Component, inject } from '@angular/core';
 import { ProfileHeader } from '../../common-ui/profile-header/profile-header.component';
 import { ProfileService } from '../../data/services/profile.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { async, map, switchMap } from 'rxjs';
+import { map, switchMap } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
 import { SvgIcon } from '../../common-ui/svg-icon/svg-icon.component';
-import { ImgUrlPipe } from '../../helpers/pipes/img-url-pipe';
+import { ImgUrlPipe } from '../../helpers/pipes/img-url.pipe';
 import { PostFeedComponent } from './post-feed/post-feed.component';
 
 @Component({

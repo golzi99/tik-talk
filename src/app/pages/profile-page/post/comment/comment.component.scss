@@ -1,0 +1,27 @@
+:host {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  grid-gap: 16px;
+}
+
+.comment-body {
+  display: grid;
+  grid-gap: 8px;
+
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--light-color);
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+
+  color: var(--light-transpatent-color);
+}
