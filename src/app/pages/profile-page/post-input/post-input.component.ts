@@ -29,8 +29,9 @@ export class PostInputComponent {
   }
 
   onSendClick() {
-    if (this.onSend) {
-      this.onSend();
+    const callback = this.onSend();
+    if (callback) {
+      callback();
     }
   }
 }
