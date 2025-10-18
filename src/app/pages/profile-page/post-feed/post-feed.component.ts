@@ -10,11 +10,19 @@ import {
 import { PostInputComponent } from '../post-input/post-input.component';
 import { PostComponent } from '../post/post.component';
 import { PostService } from '../../../data/services/post.service';
-import { firstValueFrom, map } from 'rxjs';
+import {
+  debounceTime,
+  firstValueFrom,
+  fromEvent,
+  map,
+  Subject,
+  takeUntil,
+} from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { Profile } from '../../../data/interfaces/profile.interface';
 import { ActivatedRoute } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-post-feed',
@@ -24,13 +32,9 @@ import { AsyncPipe } from '@angular/common';
 })
 export class PostFeedComponent {
   profile = input<Profile>();
+  destroy$ = new Subject<void>();
 
   @ViewChild('postInputContent') childComponent!: PostInputComponent;
-
-  @HostListener('window:resize')
-  onWindowResize() {
-    this.resizeFeed();
-  }
 
   postService = inject(PostService);
   router = inject(ActivatedRoute);
@@ -60,10 +64,16 @@ export class PostFeedComponent {
 
   ngAfterViewInit() {
     this.resizeFeed();
+
+    fromEvent(window, 'resize')
+      .pipe(debounceTime(500), takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.resizeFeed();
+      });
   }
 
-  onCreatePost() {
-    const content = this.childComponent.textAreaValue;
+  onCreatePost(textAreaValue: string) {
+    const content = textAreaValue;
     const title = this.titleValue;
 
     if (!content || content.trim() === '' || !title || title.trim() === '') {

@@ -34,8 +34,8 @@ export class PostComponent {
     this.comments.set(this.post()!.comments);
   }
 
-  async onSendComment() {
-    const comment = this.childComponent.textAreaValue;
+  async onSendComment(textAreaValue: string) {
+    const comment = textAreaValue;
 
     if (!comment || comment.trim() === '') {
       alert('Ошибка: Комментарий должен быть заполнен!');

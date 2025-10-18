@@ -12,7 +12,7 @@
         }}</span>
       </strong>
     </div>
-    <p class="medium-text">{{ post.content }}</p>
+    <p class="medium-text text-wrapper">{{ post.content }}</p>
 
     <div class="post-counters">
       <span class="comment-amount">
@@ -20,15 +20,17 @@
         <span class="comments-length">{{ comments().length }}</span>
       </span>
     </div>
-    <div class="comments__wrapper">
-      @for (comment of comments(); track comment.id) {
-        <app-comment [comment]="comment"></app-comment>
-      }
-    </div>
+    @if (comments().length) {
+      <div class="comments__wrapper">
+        @for (comment of comments(); track comment.id) {
+          <app-comment [comment]="comment"></app-comment>
+        }
+      </div>
+    }
     <app-post-input
       class="comment-input"
       [profile]="post.author"
-      [onSend]="onSendComment.bind(this)"
+      (onSendClickEvent)="onSendComment($event)"
       #commentInputContent
     ></app-post-input>
   </main>

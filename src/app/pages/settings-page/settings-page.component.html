@@ -1,4 +1,17 @@
-<app-profile-header></app-profile-header>
+@if (me(); as me) {
+  <div class="info__wrapper">
+    <app-profile-header [profile]="me"></app-profile-header>
+    <div class="dash-line mt32"></div>
+    <h3 class="h6 mb16 mt32">Навыки</h3>
+    <div class="stack-wrapper mb32">
+      @for (skill of me.stack; track skill) {
+        <div class="skill_tag">{{ skill }}</div>
+      }
+    </div>
+    <h3 class="h6 mb16">О себе</h3>
+    <div class="medium-text">{{ me.description }}</div>
+  </div>
+}
 <form class="profile-form_wrapper" [formGroup]="form">
   <div class="profile-form">
     <div class="two-columns">

@@ -19,6 +19,8 @@ import { AvatarUploadComponent } from './avatar-upload/avatar-upload.component';
 export class SettingsPageComponent {
   profileService = inject(ProfileService);
 
+  me = this.profileService.me;
+
   @ViewChild(AvatarUploadComponent) avatarUploader!: AvatarUploadComponent;
 
   form = new FormGroup({

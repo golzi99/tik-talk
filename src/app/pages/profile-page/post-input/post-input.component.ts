@@ -19,7 +19,7 @@ export class PostInputComponent {
 
   r2 = inject(Renderer2);
   profile = input<Profile>();
-  onSend = input<() => void>();
+  onSendClickEvent = output<string>();
 
   onTextAreaInput(event: Event) {
     const textarea = event.target as HTMLTextAreaElement;
@@ -29,9 +29,6 @@ export class PostInputComponent {
   }
 
   onSendClick() {
-    const callback = this.onSend();
-    if (callback) {
-      callback();
-    }
+    this.onSendClickEvent.emit(this.textAreaValue);
   }
 }

@@ -31,3 +31,16 @@
   flex-direction: column;
   gap: 8px;
 }
+
+.sub-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.profile_card__action-btns {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}

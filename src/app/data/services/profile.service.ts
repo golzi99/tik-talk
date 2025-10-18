@@ -27,9 +27,13 @@ export class ProfileService {
     return this.http.get<Profile>(`${this.baseApiUrl}account/${id}`);
   }
 
-  getSubscribersList(countSubs: number) {
+  getSubscribersList(payload: { countSubs: number; accountId?: number }) {
+    const { countSubs, accountId } = payload;
+
     return this.http
-      .get<Pageble<Profile>>(`${this.baseApiUrl}account/subscribers/`)
+      .get<
+        Pageble<Profile>
+      >(`${this.baseApiUrl}account/subscribers/${accountId ? accountId : ''}`)
       .pipe(map((res) => res.items.slice(0, countSubs)));
   }
 

@@ -1,7 +1,7 @@
 @if (profile() && isMe$ | async) {
   <app-post-input
     [profile]="profile()"
-    [onSend]="onCreatePost.bind(this)"
+    (onSendClickEvent)="onCreatePost($event)"
     #postInputContent
   >
     <label class="tt-form-label">

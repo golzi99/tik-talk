@@ -24,7 +24,13 @@
       }
     </div>
     <div class="profile_card__action-btns">
-      <button class="btn">Подписаться</button>
+      <button class="btn sub-btn">
+        <span>Подписаться</span>
+        <svg-icon icon="addperson"></svg-icon>
+      </button>
+      <a class="btn-icon link-btn" [routerLink]="['/profile', profile().id]">
+        <svg-icon icon="link"></svg-icon>
+      </a>
     </div>
   </div>
 } @else {

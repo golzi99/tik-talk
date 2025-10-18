@@ -26,7 +26,7 @@ export class SideBar {
   profileService = inject(ProfileService);
   authService = inject(AuthService);
 
-  subscribers$ = this.profileService.getSubscribersList(3);
+  subscribers$ = this.profileService.getSubscribersList({ countSubs: 3 });
   me = this.profileService.me;
 
   menuItems = [

@@ -17,6 +17,7 @@ export class PostService {
   baseApiUrl = 'https://icherniakov.ru/yt-course/';
 
   posts = signal<Post[]>([]);
+  // subsPosts = signal<Post[]>([]);
 
   createPost = (payload: PostCreateDto) => {
     return this.#http.post<Post>(`${this.baseApiUrl}post/`, payload).pipe(
@@ -43,4 +44,14 @@ export class PostService {
       .get<Post>(`${this.baseApiUrl}post/${postId}`)
       .pipe(map((res) => res.comments));
   };
+
+  // fetchSubsPosts = () => {
+  //   return this.#http
+  //     .get<Post[]>(`${this.baseApiUrl}post/my_subscriptions/`)
+  //     .pipe(
+  //       tap((res) => {
+  //         this.subsPosts.set(res);
+  //       }),
+  //     );
+  // };
 }

@@ -30,7 +30,17 @@ export class ProfilePageComponent {
   isMe$ = this.router.params.pipe(map((params) => params['id'] === 'me'));
 
   me$ = toObservable(this.profileService.me);
-  subscribers$ = this.profileService.getSubscribersList(6);
+
+  subscribers$ = this.router.params.pipe(
+    switchMap(({ id }) => {
+      if (id === 'me')
+        return this.profileService.getSubscribersList({ countSubs: 6 });
+      return this.profileService.getSubscribersList({
+        countSubs: 6,
+        accountId: id,
+      });
+    }),
+  );
 
   profile$ = this.router.params.pipe(
     switchMap(({ id }) => {
