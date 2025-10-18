@@ -1,55 +1,36 @@
-import { Component, inject, Renderer2, signal } from '@angular/core';
+import { Component, inject, input, output, Renderer2 } from '@angular/core';
 import { AvatarCircleComponent } from '../../../common-ui/avatar-circle/avatar-circle.component';
-import { ProfileService } from '../../../data/services/profile.service';
 import { SvgIcon } from '../../../common-ui/svg-icon/svg-icon.component';
-import { PostService } from '../../../data/services/post.service';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { firstValueFrom } from 'rxjs';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Profile } from '../../../data/interfaces/profile.interface';
 
 @Component({
   selector: 'app-post-input',
-  imports: [AvatarCircleComponent, SvgIcon, ReactiveFormsModule],
+  imports: [AvatarCircleComponent, SvgIcon, ReactiveFormsModule, FormsModule],
   templateUrl: './post-input.component.html',
   styleUrl: './post-input.component.scss',
 })
 export class PostInputComponent {
+  textAreaValue: string = '';
+
+  clearText(): void {
+    this.textAreaValue = '';
+  }
+
   r2 = inject(Renderer2);
-  postService = inject(PostService);
-  text = signal<string>('');
-
-  profile = inject(ProfileService).me;
-
-  postForm = new FormGroup({
-    title: new FormControl('', [Validators.required]),
-    content: new FormControl('', [Validators.required]),
-  });
+  profile = input<Profile>();
+  onSend = input<() => void>();
 
   onTextAreaInput(event: Event) {
     const textarea = event.target as HTMLTextAreaElement;
-    this.text.set(textarea.value);
 
     this.r2.setStyle(textarea, 'height', 'auto');
     this.r2.setStyle(textarea, 'height', textarea.scrollHeight + 'px');
   }
 
-  onCreatePost() {
-    if (this.postForm.invalid) return;
-
-    firstValueFrom(
-      this.postService.createPost({
-        title: this.postForm.value.title!,
-        content: this.postForm.value.content!,
-        authorId: this.profile()!.id,
-        communityId: 0,
-      }),
-    );
-
-    this.postForm.reset();
-    this.text.set('');
+  onSendClick() {
+    if (this.onSend) {
+      this.onSend();
+    }
   }
 }
