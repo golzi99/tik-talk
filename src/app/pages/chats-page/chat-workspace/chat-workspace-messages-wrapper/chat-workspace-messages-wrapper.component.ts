@@ -31,7 +31,9 @@ export class ChatWorkspaceMessagesWrapperComponent {
   formatDaySeparator(dateString: string): string {
     const locale = 'ru';
     const now = DateTime.now().setLocale(locale);
-    const date = DateTime.fromISO(dateString).setLocale(locale);
+    const date = DateTime.fromISO(dateString, { zone: 'utc' })
+      .setZone('local')
+      .setLocale(locale);
 
     if (date.hasSame(now, 'day')) {
       return 'Сегодня';
@@ -53,12 +55,16 @@ export class ChatWorkspaceMessagesWrapperComponent {
     const currentMessage = this.messages()[currentIndex];
     const previousMessage = this.messages()[currentIndex - 1];
 
-    const currentDate = DateTime.fromISO(currentMessage.createdAt).setLocale(
-      locale,
-    );
-    const previousDate = DateTime.fromISO(previousMessage.createdAt).setLocale(
-      locale,
-    );
+    const currentDate = DateTime.fromISO(currentMessage.createdAt, {
+      zone: 'utc',
+    })
+      .setZone('local')
+      .setLocale(locale);
+    const previousDate = DateTime.fromISO(previousMessage.createdAt, {
+      zone: 'utc',
+    })
+      .setZone('local')
+      .setLocale(locale);
 
     return currentDate.toISODate() !== previousDate.toISODate();
   }

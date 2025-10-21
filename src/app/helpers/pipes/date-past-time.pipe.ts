@@ -8,7 +8,9 @@ export class DatePastTimePipe implements PipeTransform {
   transform(value: string): string {
     const locale = 'ru';
     const now = DateTime.now().setLocale(locale);
-    const createdAt = DateTime.fromISO(value).setLocale(locale);
+    const createdAt = DateTime.fromISO(value, { zone: 'utc' })
+      .setZone('local')
+      .setLocale(locale);
 
     const diffInMilliseconds = now.diff(createdAt).as('milliseconds');
 
