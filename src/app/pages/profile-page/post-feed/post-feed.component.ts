@@ -1,5 +1,6 @@
 import {
   Component,
+  effect,
   ElementRef,
   inject,
   input,
@@ -53,14 +54,14 @@ export class PostFeedComponent {
   }
 
   constructor() {
-    // firstValueFrom(this.postService.fetchPosts());
-    this.router.params.pipe(takeUntil(this.destroy$)).subscribe((params) => {
-      const id = params['id'];
-      // Если id — "me", можно подставить свой id из профиля
-      const userId = id === 'me' ? this.profile()?.id : +id;
+    effect(() => {
+      const currentProfile = this.profile();
+      const id = this.router.snapshot.params['id'];
 
-      // Обновляем посты
-      firstValueFrom(this.postService.fetchPosts(userId));
+      if (id) {
+        const userId = id === 'me' ? currentProfile?.id : +id;
+        firstValueFrom(this.postService.fetchPosts(userId));
+      }
     });
   }
 

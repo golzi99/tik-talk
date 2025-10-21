@@ -1,13 +1,14 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ProfileHeader } from '../../common-ui/profile-header/profile-header.component';
 import { ProfileService } from '../../data/services/profile.service';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { map, switchMap } from 'rxjs';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { firstValueFrom, switchMap } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
 import { SvgIcon } from '../../common-ui/svg-icon/svg-icon.component';
 import { ImgUrlPipe } from '../../helpers/pipes/img-url.pipe';
 import { PostFeedComponent } from './post-feed/post-feed.component';
+import { ChatsService } from '../../data/services/chats.service';
 
 @Component({
   selector: 'app-profile-page',
@@ -25,13 +26,15 @@ import { PostFeedComponent } from './post-feed/post-feed.component';
 })
 export class ProfilePageComponent {
   profileService = inject(ProfileService);
-  router = inject(ActivatedRoute);
+  chatsService = inject(ChatsService);
+  route = inject(ActivatedRoute);
+  router = inject(Router);
 
-  isMe$ = this.router.params.pipe(map((params) => params['id'] === 'me'));
+  isMyPage = signal(false);
 
   me$ = toObservable(this.profileService.me);
 
-  subscribers$ = this.router.params.pipe(
+  subscribers$ = this.route.params.pipe(
     switchMap(({ id }) => {
       if (id === 'me')
         return this.profileService.getSubscribersList({ countSubs: 6 });
@@ -42,10 +45,16 @@ export class ProfilePageComponent {
     }),
   );
 
-  profile$ = this.router.params.pipe(
+  profile$ = this.route.params.pipe(
     switchMap(({ id }) => {
+      this.isMyPage.set(id === 'me' || id === this.profileService.me()?.id);
       if (id === 'me') return this.me$;
       return this.profileService.getAccount(id);
     }),
   );
+
+  async sendMessage(profileId: number) {
+    const res = await firstValueFrom(this.chatsService.createChat(profileId));
+    await this.router.navigate(['/chats', res.id]);
+  }
 }

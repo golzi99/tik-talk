@@ -1,0 +1,15 @@
+@if (profile(); as profile) {
+  <button class="icon_btn_outline">
+    <svg-icon icon="backarrow"></svg-icon>
+  </button>
+  <div class="companion__wrapper">
+    <app-avatar-circle
+      [avatarUrl]="profile.avatarUrl"
+      class="size32"
+    ></app-avatar-circle>
+    <span class="subtitle">{{ profile.firstName }} {{ profile.lastName }}</span>
+  </div>
+  <button class="icon_btn_outline">
+    <svg-icon icon="dots"></svg-icon>
+  </button>
+}

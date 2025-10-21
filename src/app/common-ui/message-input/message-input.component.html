@@ -1,0 +1,15 @@
+@if (me(); as me) {
+  <app-avatar-circle
+    class="size32"
+    [avatarUrl]="me.avatarUrl"
+  ></app-avatar-circle>
+}
+<textarea
+  class="hidden-textarea"
+  (input)="onTextAreaInput($event)"
+  placeholder="Напишите что-нибудь..."
+  [(ngModel)]="textAreaValue"
+></textarea>
+<button class="btn-icon" (click)="onClick()">
+  <svg-icon icon="send-message" viewBoxBase="0 0 15 12"></svg-icon>
+</button>

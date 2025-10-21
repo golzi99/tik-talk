@@ -1,0 +1,15 @@
+<div class="chats-filter-input__wrapper">
+  <input
+    placeholder="Искать..."
+    type="text"
+    class="tt-form-input"
+    [formControl]="filterChatsControl"
+  />
+</div>
+@for (chat of chats$ | async; track chat.id) {
+  <app-chat-btn
+    [chat]="chat"
+    [routerLink]="[chat.id]"
+    routerLinkActive="active-chat"
+  ></app-chat-btn>
+}

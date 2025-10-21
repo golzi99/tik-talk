@@ -1,7 +1,11 @@
-<img
-  [src]="
-    avatarUrl() ? (avatarUrl() | imgUrl) : '/assets/imgs/placeholder-avatar.svg'
-  "
-  class="avatar"
-  alt="avatar"
-/>
+@if (avatarUrl(); as avatarUrl) {
+  @if (avatarUrl) {
+    <img [src]="avatarUrl | imgUrl" alt="avatar" class="avatar" />
+  } @else {
+    <img
+      src="/assets/imgs/placeholder-avatar.svg"
+      alt="avatar"
+      class="avatar"
+    />
+  }
+}

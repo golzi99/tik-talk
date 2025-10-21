@@ -1,0 +1,13 @@
+<div class="message-wrapper mb16">
+  @for (message of messages(); track message.id; let i = $index) {
+    @if (isNewDay(i)) {
+      <span class="day-separator medium-text">{{
+        formatDaySeparator(message.createdAt)
+      }}</span>
+    }
+    <app-chat-workspace-message
+      [message]="message"
+    ></app-chat-workspace-message>
+  }
+</div>
+<app-message-input (created)="onSendMessage($event)"></app-message-input>

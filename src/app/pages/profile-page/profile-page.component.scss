@@ -18,6 +18,14 @@
       color: var(--dark-color);
     }
   }
+
+  .send-btn {
+    width: 175px;
+    display: flex;
+    align-items: center;
+    color: var(--dark-color);
+    justify-content: center;
+  }
 }
 
 .profile-page__body {

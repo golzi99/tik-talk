@@ -1,0 +1,57 @@
+:host {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  grid-gap: 12px;
+}
+
+:host.is-mine {
+  grid-template-columns: 1fr 32px;
+  justify-self: end;
+
+  .message-container {
+    order: -1;
+
+    display: grid;
+    justify-items: end;
+  }
+
+  .message-text {
+    margin-left: auto;
+    background: var(--primary-color);
+    color: var(--dark-color);
+
+    clip-path: polygon(
+        0 0,
+        calc(100% - 10px) 0,
+        100% 10px,
+        100% 100%,
+        0 100%
+    )
+  }
+}
+
+.message-container {
+  display: grid;
+  justify-items: start;
+}
+
+.message-text {
+  position: relative;
+  padding: 8px 16px;
+  background: var(--message-color);
+  font-weight: 500;
+  color: var(--light-color);
+  width: min-content;
+  white-space: normal;
+  word-wrap: break-word;
+
+  max-width: 300px;
+
+  clip-path: polygon(
+      10px 0,
+      100% 0,
+      100% 100%,
+      0 100%,
+      0 10px
+  );
+}
