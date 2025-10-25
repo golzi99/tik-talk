@@ -1,13 +1,22 @@
 :host {
   border-right: var(--light-border);
-  display: block;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: calc(100vh - (25px * 2));
+  min-height: 0;
 }
 
 .chats-filter-input__wrapper {
   padding: 16px 20px;
   border-bottom: var(--light-border);
+  flex-shrink: 0;
 
   .tt-form-input {
     width: 100%;
   }
+}
+
+.chats-btns-wrapper {
+  overflow-y: auto;
+  min-height: 0;
 }
