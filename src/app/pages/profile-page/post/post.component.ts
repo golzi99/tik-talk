@@ -11,13 +11,7 @@ import { DatePastTimePipe } from '../../../helpers/pipes/date-past-time.pipe';
 
 @Component({
   selector: 'app-post',
-  imports: [
-    AvatarCircleComponent,
-    SvgIcon,
-    PostInputComponent,
-    CommentComponent,
-    DatePastTimePipe,
-  ],
+  imports: [AvatarCircleComponent, SvgIcon, PostInputComponent, CommentComponent, DatePastTimePipe],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',
 })
@@ -48,12 +42,10 @@ export class PostComponent {
         authorId: this.me()?.id!,
         text: comment.trim(),
         commentId: 0,
-      }),
+      })
     );
     this.childComponent.clearText();
-    const newComments = await firstValueFrom(
-      this.postService.getCommentsByPostId(this.post()!.id),
-    );
+    const newComments = await firstValueFrom(this.postService.getCommentsByPostId(this.post()!.id));
     this.comments.set(newComments);
   }
 }

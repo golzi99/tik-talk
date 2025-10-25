@@ -8,11 +8,7 @@ import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-chat-workspace',
-  imports: [
-    ChatWorkspaceHeaderComponent,
-    ChatWorkspaceMessagesWrapperComponent,
-    AsyncPipe,
-  ],
+  imports: [ChatWorkspaceHeaderComponent, ChatWorkspaceMessagesWrapperComponent, AsyncPipe],
   templateUrl: './chat-workspace.component.html',
   styleUrl: './chat-workspace.component.scss',
 })
@@ -20,7 +16,5 @@ export class ChatWorkspaceComponent {
   route = inject(ActivatedRoute);
   chatsService = inject(ChatsService);
 
-  activeChat$ = this.route.params.pipe(
-    switchMap(({ id }) => this.chatsService.getChatById(id)),
-  );
+  activeChat$ = this.route.params.pipe(switchMap(({ id }) => this.chatsService.getChatById(id)));
 }

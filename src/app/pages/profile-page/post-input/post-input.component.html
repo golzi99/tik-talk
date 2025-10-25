@@ -1,8 +1,5 @@
 @if (profile()) {
-  <app-avatar-circle
-    class="size32 avatar"
-    [avatarUrl]="profile()?.avatarUrl ?? null"
-  ></app-avatar-circle>
+  <app-avatar-circle class="size32 avatar" [avatarUrl]="profile()?.avatarUrl ?? null"></app-avatar-circle>
 }
 <div class="post-form">
   <div class="form__wrapper">
@@ -16,9 +13,7 @@
         [(ngModel)]="textAreaValue"
       ></textarea>
       @if (!textAreaValue) {
-        <label for="post_message" class="custom-placeholder">
-          Напишите что-нибудь
-        </label>
+        <label for="post_message" class="custom-placeholder"> Напишите что-нибудь </label>
       }
     </div>
   </div>

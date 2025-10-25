@@ -20,13 +20,13 @@
     background: var(--primary-color);
     color: var(--dark-color);
 
-    clip-path: polygon(
-        0 0,
-        calc(100% - 10px) 0,
-        100% 10px,
-        100% 100%,
-        0 100%
-    )
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+  }
+
+  .message-info {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 8px;
   }
 }
 
@@ -47,11 +47,5 @@
 
   max-width: 300px;
 
-  clip-path: polygon(
-      10px 0,
-      100% 0,
-      100% 100%,
-      0 100%,
-      0 10px
-  );
+  clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%, 0 10px);
 }

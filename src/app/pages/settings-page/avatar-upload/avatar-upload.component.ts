@@ -36,7 +36,7 @@ export class AvatarUploadComponent {
 
     const reader = new FileReader();
 
-    reader.onload = (event) => {
+    reader.onload = event => {
       this.preview.set(event.target?.result?.toString() || '');
     };
 

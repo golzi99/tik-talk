@@ -25,9 +25,9 @@ export class ProfileFiltersComponent implements OnDestroy {
       .pipe(
         startWith({}),
         debounceTime(300),
-        switchMap((formValue) => {
+        switchMap(formValue => {
           return this.profileService.filterProfiles(formValue);
-        }),
+        })
         // takeUntilDestroyed(), // Новый вариант
       )
       .subscribe();

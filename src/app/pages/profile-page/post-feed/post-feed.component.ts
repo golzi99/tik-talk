@@ -1,23 +1,8 @@
-import {
-  Component,
-  effect,
-  ElementRef,
-  inject,
-  input,
-  Renderer2,
-  ViewChild,
-} from '@angular/core';
+import { Component, effect, ElementRef, inject, input, Renderer2, ViewChild } from '@angular/core';
 import { PostInputComponent } from '../post-input/post-input.component';
 import { PostComponent } from '../post/post.component';
 import { PostService } from '../../../data/services/post.service';
-import {
-  debounceTime,
-  firstValueFrom,
-  fromEvent,
-  map,
-  Subject,
-  takeUntil,
-} from 'rxjs';
+import { debounceTime, firstValueFrom, fromEvent, map, Subject, takeUntil } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { Profile } from '../../../data/interfaces/profile.interface';
 import { ActivatedRoute } from '@angular/router';
@@ -40,7 +25,7 @@ export class PostFeedComponent {
   r2 = inject(Renderer2);
   feed = this.postService.posts;
 
-  isMe$ = this.router.params.pipe(map((params) => params['id'] === 'me'));
+  isMe$ = this.router.params.pipe(map(params => params['id'] === 'me'));
 
   titleValue: string = '';
 
@@ -95,7 +80,7 @@ export class PostFeedComponent {
         content,
         authorId: this.profile()?.id!,
         communityId: 0,
-      }),
+      })
     ).then(() => {
       this.titleValue = '';
       this.childComponent.clearText();

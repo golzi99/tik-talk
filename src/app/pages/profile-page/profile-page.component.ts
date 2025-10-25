@@ -12,14 +12,7 @@ import { ChatsService } from '../../data/services/chats.service';
 
 @Component({
   selector: 'app-profile-page',
-  imports: [
-    ProfileHeader,
-    AsyncPipe,
-    SvgIcon,
-    RouterLink,
-    ImgUrlPipe,
-    PostFeedComponent,
-  ],
+  imports: [ProfileHeader, AsyncPipe, SvgIcon, RouterLink, ImgUrlPipe, PostFeedComponent],
   templateUrl: './profile-page.component.html',
   standalone: true,
   styleUrl: './profile-page.component.scss',
@@ -36,13 +29,12 @@ export class ProfilePageComponent {
 
   subscribers$ = this.route.params.pipe(
     switchMap(({ id }) => {
-      if (id === 'me')
-        return this.profileService.getSubscribersList({ countSubs: 6 });
+      if (id === 'me') return this.profileService.getSubscribersList({ countSubs: 6 });
       return this.profileService.getSubscribersList({
         countSubs: 6,
         accountId: id,
       });
-    }),
+    })
   );
 
   profile$ = this.route.params.pipe(
@@ -50,7 +42,7 @@ export class ProfilePageComponent {
       this.isMyPage.set(id === 'me' || id === this.profileService.me()?.id);
       if (id === 'me') return this.me$;
       return this.profileService.getAccount(id);
-    }),
+    })
   );
 
   async sendMessage(profileId: number) {

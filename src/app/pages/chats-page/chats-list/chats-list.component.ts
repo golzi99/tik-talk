@@ -8,13 +8,7 @@ import { map, startWith, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-chats-list',
-  imports: [
-    ChatBtnComponent,
-    AsyncPipe,
-    RouterLink,
-    RouterLinkActive,
-    ReactiveFormsModule,
-  ],
+  imports: [ChatBtnComponent, AsyncPipe, RouterLink, RouterLinkActive, ReactiveFormsModule],
   templateUrl: './chats-list.component.html',
   styleUrl: './chats-list.component.scss',
 })
@@ -24,17 +18,17 @@ export class ChatsListComponent {
   filterChatsControl = new FormControl();
 
   chats$ = this.chatsService.getMyChats().pipe(
-    switchMap((chats) => {
+    switchMap(chats => {
       return this.filterChatsControl.valueChanges.pipe(
         startWith(''),
-        map((inputValue) => {
-          return chats.filter((chat) => {
+        map(inputValue => {
+          return chats.filter(chat => {
             return `${chat.userFrom.lastName} ${chat.userFrom.firstName}`
               .toLowerCase()
               .includes(inputValue.toLowerCase());
           });
-        }),
+        })
       );
-    }),
+    })
   );
 }

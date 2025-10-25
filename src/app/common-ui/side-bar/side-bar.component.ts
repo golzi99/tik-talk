@@ -10,14 +10,7 @@ import { AuthService } from '../../auth/auth-service';
 
 @Component({
   selector: 'app-side-bar',
-  imports: [
-    SubscriberCard,
-    RouterLink,
-    SvgIcon,
-    AsyncPipe,
-    ImgUrlPipe,
-    RouterLinkActive,
-  ],
+  imports: [SubscriberCard, RouterLink, SvgIcon, AsyncPipe, ImgUrlPipe, RouterLinkActive],
   templateUrl: './side-bar.component.html',
   standalone: true,
   styleUrl: './side-bar.component.scss',

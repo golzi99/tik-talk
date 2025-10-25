@@ -1,4 +1,5 @@
 import { Profile } from './profile.interface';
+import { DateTime } from 'luxon';
 
 export interface Chat {
   id: number;
@@ -6,6 +7,7 @@ export interface Chat {
   userSecond: Profile;
   messages: Message[];
   companion?: Profile;
+  groupedMessages?: GroupChatMessages[];
 }
 
 export interface Message {
@@ -26,4 +28,9 @@ export interface LastMessageResponse {
   message: string | null;
   createdAt: string;
   unreadMessages: number;
+}
+
+export interface GroupChatMessages {
+  dateTime: DateTime;
+  messages: Message[];
 }

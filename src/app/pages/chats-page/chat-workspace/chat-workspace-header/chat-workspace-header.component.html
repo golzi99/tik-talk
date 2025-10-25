@@ -1,12 +1,9 @@
 @if (profile(); as profile) {
-  <button class="icon_btn_outline">
+  <a class="icon_btn_outline" [routerLink]="['/chats']">
     <svg-icon icon="backarrow"></svg-icon>
-  </button>
+  </a>
   <div class="companion__wrapper">
-    <app-avatar-circle
-      [avatarUrl]="profile.avatarUrl"
-      class="size32"
-    ></app-avatar-circle>
+    <app-avatar-circle [avatarUrl]="profile.avatarUrl" class="size32"></app-avatar-circle>
     <span class="subtitle">{{ profile.firstName }} {{ profile.lastName }}</span>
   </div>
   <button class="icon_btn_outline">

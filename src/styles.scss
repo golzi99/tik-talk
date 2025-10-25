@@ -1,12 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
-@use "fonts" as *;
-@use "margin" as *;
+@use 'fonts' as *;
+@use 'margin' as *;
 
 :root {
   --dark-color: #000000;
-  --light-color: #FFFFFF;
-  --primary-color: #AE7AFF;
-  --gray-color: #5F646D;
+  --light-color: #ffffff;
+  --primary-color: #ae7aff;
+  --gray-color: #5f646d;
   --dark-hover-color: #161616;
   --light-transpatent-color: rgba(255, 255, 255, 0.75);
   --light-border: 1px solid var(--light-color);
@@ -34,10 +34,10 @@ ul {
 }
 
 body {
-  font-family: "JetBrains Mono", sans-serif;
+  font-family: 'JetBrains Mono', sans-serif;
   background: var(--dark-color);
   color: var(--light-color);
-  background-image: url("/assets/imgs/backgroundImg.svg");
+  background-image: url('/assets/imgs/backgroundImg.svg');
   background-size: cover;
   height: 100dvh;
 }
@@ -82,7 +82,7 @@ body {
   position: relative;
 
   &:before {
-    content: "";
+    content: '';
     position: absolute;
     bottom: -4px;
     right: -4px;
@@ -127,7 +127,7 @@ body {
 }
 
 .medium-text {
-  font-family: "JetBrains Mono", sans-serif;
+  font-family: 'JetBrains Mono', sans-serif;
   font-size: 12px;
   font-weight: 500;
   line-height: 16px;
@@ -150,7 +150,7 @@ body {
   font-weight: 400;
   font-size: 14px;
   line-height: 21px;
-  font-family: "JetBrains Mono", sans-serif;
+  font-family: 'JetBrains Mono', sans-serif;
   color: var(--light-color);
   margin-top: 8px;
 }

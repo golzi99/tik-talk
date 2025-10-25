@@ -23,9 +23,9 @@ export class AuthService {
     fd.append('username', payload.username ?? '');
     fd.append('password', payload.password ?? '');
     return this.http.post<TokenResponse>(`${this.baseApiUrl}token`, fd).pipe(
-      tap((val) => {
+      tap(val => {
         this.saveTokens(val);
-      }),
+      })
     );
   }
 
@@ -35,13 +35,13 @@ export class AuthService {
         refresh_token: this.refreshToken,
       })
       .pipe(
-        catchError((err) => {
+        catchError(err => {
           this.logout();
           return throwError(err);
         }),
-        tap((val) => {
+        tap(val => {
           this.saveTokens(val);
-        }),
+        })
       );
   }
 

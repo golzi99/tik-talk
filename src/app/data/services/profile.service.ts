@@ -17,9 +17,9 @@ export class ProfileService {
 
   getMe() {
     return this.http.get<MeResponse>(`${this.baseApiUrl}account/me`).pipe(
-      tap((res) => {
+      tap(res => {
         this.me.set(res);
-      }),
+      })
     );
   }
 
@@ -31,10 +31,8 @@ export class ProfileService {
     const { countSubs, accountId } = payload;
 
     return this.http
-      .get<
-        Pageble<Profile>
-      >(`${this.baseApiUrl}account/subscribers/${accountId ? accountId : ''}`)
-      .pipe(map((res) => res.items.slice(0, countSubs)));
+      .get<Pageble<Profile>>(`${this.baseApiUrl}account/subscribers/${accountId ? accountId : ''}`)
+      .pipe(map(res => res.items.slice(0, countSubs)));
   }
 
   patchProfile(profile: Partial<Profile>) {
@@ -54,9 +52,9 @@ export class ProfileService {
         params,
       })
       .pipe(
-        tap((res) => {
+        tap(res => {
           this.filteredProfiles.set(res.items);
-        }),
+        })
       );
   }
 }

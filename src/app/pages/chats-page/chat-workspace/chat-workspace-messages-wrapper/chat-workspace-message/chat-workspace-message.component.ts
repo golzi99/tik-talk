@@ -1,11 +1,11 @@
 import { Component, HostBinding, input } from '@angular/core';
 import { Message } from '../../../../../data/interfaces/chats.interface';
 import { AvatarCircleComponent } from '../../../../../common-ui/avatar-circle/avatar-circle.component';
-import { DatePastTimePipe } from '../../../../../helpers/pipes/date-past-time.pipe';
+import { DateTimePipe } from '../../../../../helpers/pipes/date-time.pipe';
 
 @Component({
   selector: 'app-chat-workspace-message',
-  imports: [AvatarCircleComponent, DatePastTimePipe],
+  imports: [AvatarCircleComponent, DateTimePipe],
   templateUrl: './chat-workspace-message.component.html',
   styleUrl: './chat-workspace-message.component.scss',
 })

@@ -1,9 +1,5 @@
 @if (profile() && isMe$ | async) {
-  <app-post-input
-    [profile]="profile()"
-    (onSendClickEvent)="onCreatePost($event)"
-    #postInputContent
-  >
+  <app-post-input [profile]="profile()" (onSendClickEvent)="onCreatePost($event)" #postInputContent>
     <label class="tt-form-label">
       <span class="tt-form-label__text">Title</span>
       <input type="text" class="tt-form-input" [(ngModel)]="titleValue" />

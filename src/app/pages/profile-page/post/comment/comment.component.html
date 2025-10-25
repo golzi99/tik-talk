@@ -1,8 +1,5 @@
 @if (comment(); as comment) {
-  <app-avatar-circle
-    class="size32"
-    [avatarUrl]="comment.author.avatarUrl"
-  ></app-avatar-circle>
+  <app-avatar-circle class="size32" [avatarUrl]="comment.author.avatarUrl"></app-avatar-circle>
   <div class="comment-body">
     <header class="comment-header">
       <span>{{ comment.author.firstName }} {{ comment.author.lastName }}</span>

@@ -1,11 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import {
-  CommentCreateDto,
-  Post,
-  PostComment,
-  PostCreateDto,
-} from '../interfaces/post.interface';
+import { CommentCreateDto, Post, PostComment, PostCreateDto } from '../interfaces/post.interface';
 import { map, switchMap, tap } from 'rxjs';
 
 @Injectable({
@@ -22,23 +17,21 @@ export class PostService {
     return this.#http.post<Post>(`${this.baseApiUrl}post/`, payload).pipe(
       switchMap(() => {
         return this.fetchPosts();
-      }),
+      })
     );
   };
 
   fetchPosts = (userId?: number) => {
-    const params = userId
-      ? new HttpParams().set('user_id', userId?.toString())
-      : undefined;
+    const params = userId ? new HttpParams().set('user_id', userId?.toString()) : undefined;
 
     return this.#http
       .get<Post[]>(`${this.baseApiUrl}post/`, {
         params,
       })
       .pipe(
-        tap((res) => {
+        tap(res => {
           this.posts.set(res);
-        }),
+        })
       );
   };
 
@@ -47,8 +40,6 @@ export class PostService {
   };
 
   getCommentsByPostId = (postId: number) => {
-    return this.#http
-      .get<Post>(`${this.baseApiUrl}post/${postId}`)
-      .pipe(map((res) => res.comments));
+    return this.#http.get<Post>(`${this.baseApiUrl}post/${postId}`).pipe(map(res => res.comments));
   };
 }
