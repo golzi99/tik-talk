@@ -1,0 +1,43 @@
+:host {
+  display: grid;
+  place-content: center;
+  height: 100%;
+}
+
+.main-form {
+  max-height: calc(100vh - 192px);
+  overflow-y: auto;
+  width: 100%;
+  padding-right: 8px;
+  padding-left: 8px;
+}
+
+.form-gird {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 16px;
+  margin-bottom: 16px;
+}
+
+.validation {
+  display: none;
+}
+
+.tt-input.ng-invalid.ng-touched {
+  border: 1px solid tomato;
+}
+
+.tt-input.ng-invalid.ng-touched + .validation {
+  display: block;
+}
+
+.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 16px;
+}
+
+//.ng-submitted {
+//  border: 1px solid aquamarine;
+//}

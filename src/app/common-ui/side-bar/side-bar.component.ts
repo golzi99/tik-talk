@@ -26,6 +26,7 @@ export class SideBar {
     { label: 'Моя страница', icon: 'home', link: '/profile/me' },
     { label: 'Чаты', icon: 'chat', link: '/chats' },
     { label: 'Поиск', icon: 'search', link: '/search' },
+    { label: 'EXPERIMENTAL', icon: 'settings', link: '/experimental' },
   ];
 
   isSettingsOpen = false;

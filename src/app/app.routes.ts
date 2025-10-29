@@ -6,6 +6,7 @@ import { LayoutComponent } from './common-ui/layout/layout.component';
 import { accessGuard } from './auth/access-guard';
 import { SettingsPageComponent } from './pages/settings-page/settings-page.component';
 import { chatsRoutes } from './pages/chats-page/chatsRoutes';
+import { FormsExperimentalComponent } from './experimental/lib/form-experimental/form-experimental.component';
 
 export const routes: Routes = [
   {
@@ -17,6 +18,7 @@ export const routes: Routes = [
       { path: 'profile/:id', component: ProfilePageComponent },
       { path: 'settings', component: SettingsPageComponent },
       { path: 'chats', loadChildren: () => chatsRoutes },
+      { path: 'experimental', component: FormsExperimentalComponent },
     ],
     canActivate: [accessGuard],
   },
