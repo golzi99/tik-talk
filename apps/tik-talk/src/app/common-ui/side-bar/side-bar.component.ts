@@ -6,7 +6,7 @@ import { ProfileService } from '../../data/services/profile.service';
 import { AsyncPipe } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 import { ImgUrlPipe } from '../../helpers/pipes/img-url.pipe';
-import { AuthService } from '../../auth/auth-service';
+import { AuthService } from '@tt/auth';
 
 @Component({
   selector: 'app-side-bar',
