@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SvgIcon } from '../../common-ui/svg-icon/svg-icon.component';
+import { SvgIcon } from '../../../../../../libs/common-ui/src/lib/components/svg-icon/svg-icon.component';
 import { AuthForm, AuthService } from '@tt/auth';
 
 @Component({

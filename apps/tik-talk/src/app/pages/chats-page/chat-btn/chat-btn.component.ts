@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
-import { AvatarCircleComponent } from '../../../common-ui/avatar-circle/avatar-circle.component';
+import { AvatarCircleComponent } from '../../../../../../../libs/common-ui/src/lib/components/avatar-circle/avatar-circle.component';
 import { LastMessageResponse } from '../../../data/interfaces/chats.interface';
-import { DatePastTimePipe } from '../../../helpers/pipes/date-past-time.pipe';
+import { DatePastTimePipe } from '../../../../../../../libs/common-ui/src/lib/pipes/date-past-time.pipe';
 
 @Component({
   selector: 'app-chat-btn',

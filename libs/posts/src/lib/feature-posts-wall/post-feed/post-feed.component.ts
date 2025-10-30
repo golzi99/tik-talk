@@ -1,12 +1,12 @@
 import { Component, effect, ElementRef, inject, input, Renderer2 } from '@angular/core';
 import { debounceTime, firstValueFrom, fromEvent, map, Subject, takeUntil } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { Profile } from '../../../data/interfaces/profile.interface';
 import { ActivatedRoute } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
-import { MessageInputComponent } from '../../../common-ui/message-input/message-input.component';
 import { PostService } from '../../data';
 import { PostComponent } from '@tt/posts';
+import { MessageInputComponent } from '@tt/common-ui';
+import { Profile } from '@tt/profile';
 
 @Component({
   selector: 'app-post-feed',
