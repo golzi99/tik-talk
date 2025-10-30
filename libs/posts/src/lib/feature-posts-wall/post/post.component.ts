@@ -1,23 +1,26 @@
-import { Component, inject, input, signal, ViewChild } from '@angular/core';
-import { Post, PostComment } from '../../../data/interfaces/post.interface';
+import { Component, inject, input, signal } from '@angular/core';
 import { AvatarCircleComponent } from '../../../common-ui/avatar-circle/avatar-circle.component';
 import { SvgIcon } from '../../../common-ui/svg-icon/svg-icon.component';
-import { PostInputComponent } from '../post-input/post-input.component';
-import { PostService } from '../../../data/services/post.service';
 import { firstValueFrom } from 'rxjs';
 import { ProfileService } from '../../../data/services/profile.service';
-import { CommentComponent } from './comment/comment.component';
+import { CommentComponent } from '@tt/posts';
 import { DatePastTimePipe } from '../../../helpers/pipes/date-past-time.pipe';
+import { MessageInputComponent } from '../../../common-ui/message-input/message-input.component';
+import { Post, PostComment, PostService } from '../../data';
 
 @Component({
   selector: 'app-post',
-  imports: [AvatarCircleComponent, SvgIcon, PostInputComponent, CommentComponent, DatePastTimePipe],
+  imports: [
+    AvatarCircleComponent,
+    SvgIcon,
+    CommentComponent,
+    DatePastTimePipe,
+    MessageInputComponent,
+  ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',
 })
 export class PostComponent {
-  @ViewChild('commentInputContent') childComponent!: PostInputComponent;
-
   post = input<Post>();
   postService = inject(PostService);
   me = inject(ProfileService).me;
@@ -44,7 +47,6 @@ export class PostComponent {
         commentId: 0,
       })
     );
-    this.childComponent.clearText();
     const newComments = await firstValueFrom(this.postService.getCommentsByPostId(this.post()!.id));
     this.comments.set(newComments);
   }

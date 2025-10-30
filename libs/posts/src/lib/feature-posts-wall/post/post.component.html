@@ -21,11 +21,6 @@
         }
       </div>
     }
-    <app-post-input
-      class="comment-input"
-      [profile]="me()!"
-      (onSendClickEvent)="onSendComment($event)"
-      #commentInputContent
-    ></app-post-input>
+    <app-message-input (created)="onSendComment($event)" class="comment-input"></app-message-input>
   </main>
 }
