@@ -1,5 +1,5 @@
-import { Profile } from './profile.interface';
 import { DateTime } from 'luxon';
+import { Profile } from '@tt/profile';
 
 export interface Chat {
   id: number;

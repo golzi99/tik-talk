@@ -6,9 +6,9 @@ import {
   LastMessageResponse,
   Message,
 } from '../interfaces/chats.interface';
-import { ProfileService } from './profile.service';
 import { map } from 'rxjs';
 import { DateTime } from 'luxon';
+import { ProfileService } from '@tt/profile';
 
 @Injectable({
   providedIn: 'root',

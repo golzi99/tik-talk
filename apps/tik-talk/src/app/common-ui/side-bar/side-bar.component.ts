@@ -1,12 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { SvgIcon } from '../../../../../../libs/common-ui/src/lib/components/svg-icon/svg-icon.component';
 import { SubscriberCard } from './subscriber-card/subscriber-card.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ProfileService } from '../../data/services/profile.service';
 import { AsyncPipe } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
-import { ImgUrlPipe } from '../../../../../../libs/common-ui/src/lib/pipes/img-url.pipe';
 import { AuthService } from '@tt/auth';
+import { ImgUrlPipe, SvgIcon } from '@tt/common-ui';
+import { ProfileService } from '@tt/profile';
 
 @Component({
   selector: 'app-side-bar',

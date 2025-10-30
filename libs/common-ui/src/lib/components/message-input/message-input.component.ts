@@ -1,8 +1,8 @@
 import { Component, inject, output, Renderer2 } from '@angular/core';
-import { AvatarCircleComponent } from '../avatar-circle/avatar-circle.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProfileService } from '@tt/profile';
 import { SvgIcon } from '../svg-icon/svg-icon.component';
-import { ProfileService } from '../../../../../../apps/tik-talk/src/app/data/services/profile.service';
+import { AvatarCircleComponent } from '../avatar-circle/avatar-circle.component';
 
 @Component({
   selector: 'app-message-input',

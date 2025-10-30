@@ -1,9 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
-import { SvgIcon } from '../../../../../../../libs/common-ui/src/lib/components/svg-icon/svg-icon.component';
 import { DndDirective } from '../../../common-ui/derectives/dnd.directive';
 import { FormsModule } from '@angular/forms';
-import { ProfileService } from '../../../data/services/profile.service';
-import { ImgUrlPipe } from '../../../../../../../libs/common-ui/src/lib/pipes/img-url.pipe';
+import { ImgUrlPipe, SvgIcon } from '@tt/common-ui';
+import { ProfileService } from '@tt/profile';
 
 @Component({
   selector: 'app-avatar-upload',

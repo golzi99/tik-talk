@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { PostService } from '../../data';
-import { PostComponent } from '@tt/posts';
+import { PostComponent } from '../index';
 import { MessageInputComponent } from '@tt/common-ui';
 import { Profile } from '@tt/profile';
 

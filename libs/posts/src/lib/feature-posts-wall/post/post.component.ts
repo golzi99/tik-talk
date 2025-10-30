@@ -1,6 +1,6 @@
 import { Component, inject, input, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { CommentComponent } from '@tt/posts';
+import { CommentComponent } from '../../ui';
 import { Post, PostComment, PostService } from '../../data';
 import {
   AvatarCircleComponent,
