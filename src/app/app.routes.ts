@@ -6,7 +6,7 @@ import { LayoutComponent } from './common-ui/layout/layout.component';
 import { accessGuard } from './auth/access-guard';
 import { SettingsPageComponent } from './pages/settings-page/settings-page.component';
 import { chatsRoutes } from './pages/chats-page/chatsRoutes';
-import { FormsExperimentalComponent } from './experimental/lib/form-experimental/form-experimental.component';
+import { FormsExperimentalComponent } from './experimental/test-form/form-experimental/form-experimental.component';
 
 export const routes: Routes = [
   {
