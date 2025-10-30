@@ -1,0 +1,26 @@
+@if (profile()) {
+  <app-avatar-circle
+    class="size32 avatar"
+    [avatarUrl]="profile()?.avatarUrl ?? null"
+  ></app-avatar-circle>
+}
+<div class="post-form">
+  <div class="form__wrapper">
+    <ng-content></ng-content>
+    <div class="textarea__wrapper">
+      <textarea
+        id="post_message"
+        class="hidden-textarea"
+        (input)="onTextAreaInput($event)"
+        placeholder=""
+        [(ngModel)]="textAreaValue"
+      ></textarea>
+      @if (!textAreaValue) {
+        <label for="post_message" class="custom-placeholder"> Напишите что-нибудь </label>
+      }
+    </div>
+  </div>
+  <button class="btn-icon" (click)="onSendClick()">
+    <svg-icon icon="send-message" viewBoxBase="0 0 15 12"></svg-icon>
+  </button>
+</div>
