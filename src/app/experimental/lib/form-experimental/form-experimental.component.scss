@@ -38,6 +38,10 @@
   grid-gap: 16px;
 }
 
+.tt-input.ng-pending {
+  border: 1px dashed tomato;
+}
+
 //.ng-submitted {
 //  border: 1px solid aquamarine;
 //}

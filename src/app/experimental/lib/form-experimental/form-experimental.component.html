@@ -16,9 +16,12 @@
   @if (form.controls.name.touched && form.controls.name.hasError('required')) {
     <small>Это поле обязательно!</small>
   }
-  @if (form.controls.name.touched && form.controls.name.hasError('startsWith')) {
-    <small>{{ form.controls.name.getError('startsWith')?.message }}</small>
+  @if (form.controls.name.touched && form.controls.name.hasError('nameValid')) {
+    <small>{{ form.controls.name.getError('nameValid')?.message }}</small>
   }
+  <!--  @if (form.controls.name.touched && form.controls.name.hasError('startsWith')) {-->
+  <!--    <small>{{ form.controls.name.getError('startsWith')?.message }}</small>-->
+  <!--  }-->
 
   @if (form.controls.type.value === ReceiverType.LEGAL) {
     <label class="tt-control-label mb16">
@@ -36,6 +39,15 @@
       />
     </label>
   }
+  <label class="tt-control-label mb16">
+    Телефон
+    <input
+      class="tt-input"
+      [maskito]="maskitoOptions"
+      formControlName="phoneNumber"
+      placeholder="+7 (XXX) XXX-XX-XX"
+    />
+  </label>
 
   <div>
     <div style="display: flex; justify-content: space-between">
@@ -52,6 +64,10 @@
         <input class="tt-input" type="date" formControlName="to" />
       </label>
     </div>
+
+    @if (form.controls.dateRange.touched && form.controls.dateRange.hasError('dateRange')) {
+      <small>{{ form.controls.dateRange.getError('dateRange')?.message }}</small>
+    }
 
     <div>
       <div style="display: flex; justify-content: space-between">
