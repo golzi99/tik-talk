@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SideBar } from '../../../../../../apps/tik-talk/src/app/common-ui/side-bar/side-bar.component';
+import { SideBar } from '../side-bar';
 
 @Component({
   selector: 'app-layout',

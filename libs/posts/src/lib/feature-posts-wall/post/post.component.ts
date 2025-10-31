@@ -8,7 +8,7 @@ import {
   MessageInputComponent,
   SvgIcon,
 } from '@tt/common-ui';
-import { ProfileService } from '@tt/profile';
+import { GlobalStoreService } from '@tt/shared';
 
 @Component({
   selector: 'app-post',
@@ -25,7 +25,7 @@ import { ProfileService } from '@tt/profile';
 export class PostComponent {
   post = input<Post>();
   postService = inject(PostService);
-  me = inject(ProfileService).me;
+  me = inject(GlobalStoreService).me;
 
   comments = signal<PostComment[]>([]);
 

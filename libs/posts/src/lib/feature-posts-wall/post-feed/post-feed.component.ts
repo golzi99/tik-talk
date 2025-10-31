@@ -5,8 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { PostService } from '../../data';
 import { PostComponent } from '../index';
+import { Profile } from '@tt/interfaces/profille';
 import { MessageInputComponent } from '@tt/common-ui';
-import { Profile } from '@tt/profile';
 
 @Component({
   selector: 'app-post-feed',

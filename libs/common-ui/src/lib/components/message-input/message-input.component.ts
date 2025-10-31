@@ -1,8 +1,7 @@
 import { Component, inject, output, Renderer2 } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ProfileService } from '@tt/profile';
-import { SvgIcon } from '../svg-icon/svg-icon.component';
-import { AvatarCircleComponent } from '../avatar-circle/avatar-circle.component';
+import { AvatarCircleComponent, SvgIcon } from '@tt/common-ui';
+import { GlobalStoreService } from '@tt/shared';
 
 @Component({
   selector: 'app-message-input',
@@ -12,7 +11,7 @@ import { AvatarCircleComponent } from '../avatar-circle/avatar-circle.component'
 })
 export class MessageInputComponent {
   r2 = inject(Renderer2);
-  me = inject(ProfileService).me;
+  me = inject(GlobalStoreService).me;
 
   textAreaValue: string = '';
   created = output<string>();

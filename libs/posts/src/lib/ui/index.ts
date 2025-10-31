@@ -1,1 +1,3 @@
-export { CommentComponent } from './comment/comment.component';
+import { CommentComponent } from './comment/comment.component';
+
+export { CommentComponent };
