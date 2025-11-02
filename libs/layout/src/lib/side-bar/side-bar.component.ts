@@ -3,9 +3,8 @@ import { SubscriberCard } from './subscriber-card/subscriber-card.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
-import { AuthService } from '@tt/auth';
 import { ImgUrlPipe, SvgIcon } from '@tt/common-ui';
-import { ProfileService } from '@tt/profile';
+import { AuthService, ProfileService } from '@tt/data-access';
 
 @Component({
   selector: 'app-side-bar',

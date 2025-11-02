@@ -8,7 +8,7 @@ import {
 } from '../interfaces/chats.interface';
 import { map } from 'rxjs';
 import { DateTime } from 'luxon';
-import { ProfileService } from '@tt/profile';
+import { ProfileService } from '../../profile-api';
 
 @Injectable({
   providedIn: 'root',

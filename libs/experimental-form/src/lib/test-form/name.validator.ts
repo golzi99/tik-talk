@@ -2,7 +2,7 @@ import { AbstractControl, AsyncValidator, ValidationErrors } from '@angular/form
 import { delay, map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Profile } from '@tt/profile';
+import { Profile } from '@tt/data-access';
 
 @Injectable({
   providedIn: 'root',

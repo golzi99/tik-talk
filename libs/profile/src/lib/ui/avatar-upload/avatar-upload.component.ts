@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { DndDirective } from '@tt/common-ui';
 import { FormsModule } from '@angular/forms';
 import { ImgUrlPipe, SvgIcon } from '@tt/common-ui';
-import { ProfileService } from '../../data';
+import { ProfileService } from '@tt/data-access';
 
 @Component({
   selector: 'app-avatar-upload',

@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ImgUrlPipe, SvgIcon } from '@tt/common-ui';
-import { Profile } from '../../data';
+import { Profile } from '@tt/data-access';
 
 @Component({
   selector: 'app-profile-card',
