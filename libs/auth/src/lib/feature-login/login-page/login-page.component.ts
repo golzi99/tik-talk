@@ -1,7 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthForm } from '../../auth/auth-interface';
 import { SvgIcon } from '@tt/common-ui';
 import { AuthService } from '../../auth/auth-service';
 
@@ -18,7 +17,7 @@ export class LoginPageComponent {
 
   isPasswordVisible = signal<boolean>(false);
 
-  form = new FormGroup<AuthForm>({
+  form = new FormGroup({
     username: new FormControl(null, {
       validators: [Validators.required],
     }),

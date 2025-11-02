@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
 import { SearchPageComponent, SettingsPageComponent } from '@tt/profile';
 import { chatsRoutes } from '@tt/chats';
-import { FormsExperimentalComponent } from './experimental/test-form/form-experimental/form-experimental.component';
 import { accessGuard, LoginPageComponent } from '@tt/auth';
 import { ProfilePageComponent } from '@tt/profile';
 import { LayoutComponent } from '@tt/layout';
+import { FormsExperimentalComponent } from '@tt/experimental-form';
 
 export const routes: Routes = [
   {
