@@ -33,7 +33,9 @@ export class ProfileService {
     const { countSubs, accountId } = payload;
 
     return this.http
-      .get<Pageble<Profile>>(`${this.baseApiUrl}account/subscribers/${accountId ? accountId : ''}`)
+      .get<
+        Pageble<Profile>
+      >(`${this.baseApiUrl}account/subscribers/${accountId ? accountId : ''}`)
       .pipe(map(res => res.items.slice(0, countSubs)));
   }
 
@@ -49,14 +51,11 @@ export class ProfileService {
   }
 
   filterProfiles(params: Record<string, any>) {
-    return this.http
-      .get<Pageble<Profile>>(`${this.baseApiUrl}account/accounts`, {
+    return this.http.get<Pageble<Profile>>(
+      `${this.baseApiUrl}account/accounts`,
+      {
         params,
-      })
-      .pipe(
-        tap(res => {
-          this.filteredProfiles.set(res.items);
-        })
-      );
+      }
+    );
   }
 }
