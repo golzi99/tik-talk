@@ -2,7 +2,7 @@ import { ProfileState } from '../../profile-api';
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { profileActions } from './actions';
 
-export const initialState: ProfileState = {
+export const initialStateProfile: ProfileState = {
   profiles: [],
   profileFilters: {},
 };
@@ -10,7 +10,7 @@ export const initialState: ProfileState = {
 export const profileFeature = createFeature({
   name: 'profileFeature',
   reducer: createReducer(
-    initialState,
+    initialStateProfile,
     on(profileActions.profilesLoaded, (state, payload) => {
       return {
         ...state,

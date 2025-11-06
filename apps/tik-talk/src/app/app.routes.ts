@@ -7,7 +7,12 @@ import { LayoutComponent } from '@tt/layout';
 import { FormsExperimentalComponent } from '@tt/experimental-form';
 import { provideState } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
-import { ProfileEffects, profileFeature } from '@tt/data-access';
+import {
+  PostsEffects,
+  postsFeature,
+  ProfileEffects,
+  profileFeature,
+} from '@tt/data-access';
 
 export const routes: Routes = [
   {
@@ -23,7 +28,11 @@ export const routes: Routes = [
           provideEffects(ProfileEffects),
         ],
       },
-      { path: 'profile/:id', component: ProfilePageComponent },
+      {
+        path: 'profile/:id',
+        component: ProfilePageComponent,
+        providers: [provideState(postsFeature), provideEffects(PostsEffects)],
+      },
       { path: 'settings', component: SettingsPageComponent },
       { path: 'chats', loadChildren: () => chatsRoutes },
       { path: 'experimental', component: FormsExperimentalComponent },

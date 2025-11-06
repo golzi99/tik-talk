@@ -1,5 +1,4 @@
-import { Component, inject, input, signal } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
+import { Component, inject, input } from '@angular/core';
 import { CommentComponent } from '../../ui';
 import {
   AvatarCircleComponent,
@@ -7,7 +6,8 @@ import {
   MessageInputComponent,
   SvgIcon,
 } from '@tt/common-ui';
-import { GlobalStoreService, Post, PostComment, PostService } from '@tt/data-access';
+import { GlobalStoreService, Post, postsActions } from '@tt/data-access';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-post',
@@ -22,14 +22,13 @@ import { GlobalStoreService, Post, PostComment, PostService } from '@tt/data-acc
   styleUrl: './post.component.scss',
 })
 export class PostComponent {
+  store = inject(Store);
+
   post = input<Post>();
-  postService = inject(PostService);
   me = inject(GlobalStoreService).me;
 
-  comments = signal<PostComment[]>([]);
-
-  async ngOnInit() {
-    this.comments.set(this.post()!.comments);
+  get comments() {
+    return this.post()!.comments;
   }
 
   async onSendComment(textAreaValue: string) {
@@ -40,15 +39,13 @@ export class PostComponent {
       return;
     }
 
-    await firstValueFrom(
-      this.postService.createComment({
+    this.store.dispatch(
+      postsActions.createComment({
         postId: this.post()?.id!,
         authorId: this.me()?.id!,
         text: comment.trim(),
         commentId: 0,
       })
     );
-    const newComments = await firstValueFrom(this.postService.getCommentsByPostId(this.post()!.id));
-    this.comments.set(newComments);
   }
 }
