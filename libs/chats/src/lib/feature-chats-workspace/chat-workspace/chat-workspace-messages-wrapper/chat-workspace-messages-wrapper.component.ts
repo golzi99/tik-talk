@@ -1,6 +1,5 @@
 import { Component, inject, input } from '@angular/core';
 import { ChatWorkspaceMessageComponent } from './chat-workspace-message/chat-workspace-message.component';
-import { firstValueFrom } from 'rxjs';
 import { DateTime } from 'luxon';
 import { MessageInputComponent } from '@tt/common-ui';
 import { Chat, ChatsService } from '@tt/data-access/chats-api';

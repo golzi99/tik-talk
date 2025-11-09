@@ -10,10 +10,7 @@ import { map, Observable } from 'rxjs';
 import { DateTime } from 'luxon';
 import { GlobalStoreService } from '../../profile-api';
 import { AuthService } from '../../auth-api';
-import {
-  ChatWsMessage,
-  ChatWsUnreadMessage,
-} from '../interfaces/chat-ws-message.interface';
+import { ChatWsMessage } from '../interfaces/chat-ws-message.interface';
 import { isNewMessage, isUnreadMessage } from '../interfaces/type-guards';
 import { ChatWsRxjsService } from './chat-ws-rxjs.service';
 
