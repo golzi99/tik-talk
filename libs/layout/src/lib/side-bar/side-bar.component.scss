@@ -58,6 +58,21 @@
   }
 }
 
+.unread-messages-counter {
+  height: 18px;
+  background-color: var(--primary-color);
+  color: var(--dark-color);
+
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+}
+
 .to-subscribers {
   display: flex;
   gap: 12px;

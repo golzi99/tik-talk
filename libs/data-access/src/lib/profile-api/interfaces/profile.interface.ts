@@ -11,7 +11,7 @@ export interface Profile {
   description: string;
 }
 
-export interface ProfileState {
+export interface ProfilesState {
   profiles: Profile[];
   profileFilters: Record<string, any>;
 }

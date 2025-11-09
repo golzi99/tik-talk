@@ -12,8 +12,9 @@ import { ActivatedRoute } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { PostComponent } from '../index';
 import { MessageInputComponent } from '@tt/common-ui';
-import { postsActions, Profile, selectPosts } from '@tt/data-access';
 import { Store } from '@ngrx/store';
+import { Profile } from '@tt/data-access/profile-api';
+import { postsActions, selectPosts } from '@tt/data-access/posts-api';
 
 @Component({
   selector: 'app-post-feed',

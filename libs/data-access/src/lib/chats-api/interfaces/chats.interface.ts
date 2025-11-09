@@ -17,8 +17,8 @@ export interface Message {
   text: string;
   createdAt: string;
   isRead: boolean;
-  updatedAt: string;
-  user?: Profile;
+  updatedAt?: string;
+  user?: Profile | null;
   isMine: boolean;
 }
 

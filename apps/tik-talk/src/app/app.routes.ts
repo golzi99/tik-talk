@@ -7,12 +7,8 @@ import { LayoutComponent } from '@tt/layout';
 import { FormsExperimentalComponent } from '@tt/experimental-form';
 import { provideState } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
-import {
-  PostsEffects,
-  postsFeature,
-  ProfileEffects,
-  profileFeature,
-} from '@tt/data-access';
+import { PostsEffects, postsFeature } from '@tt/data-access/posts-api';
+import { profileFeature, ProfileEffects } from '@tt/data-access/profile-api';
 
 export const routes: Routes = [
   {

@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { AvatarCircleComponent, DatePastTimePipe } from '@tt/common-ui';
-import { LastMessageResponse } from '@tt/data-access';
+import { LastMessageResponse } from '@tt/data-access/chats-api';
 
 @Component({
   selector: 'app-chat-btn',

@@ -1,8 +1,11 @@
-import { Component, effect, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, startWith, Subscription, switchMap } from 'rxjs';
-import { profileActions, selectFiltersParams } from '@tt/data-access';
+import { debounceTime, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
+import {
+  profileActions,
+  selectFiltersParams,
+} from '@tt/data-access/profile-api';
 
 @Component({
   selector: 'app-profile-filters',

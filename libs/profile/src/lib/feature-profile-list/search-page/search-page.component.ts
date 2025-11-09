@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { ProfileCard } from '../../ui';
 import { ProfileFiltersComponent } from '../profile-filters/profile-filters.component';
-import { selectFilteredProfiles } from '@tt/data-access';
 import { Store } from '@ngrx/store';
+import { selectFilteredProfiles } from '@tt/data-access/profile-api';
 
 @Component({
   selector: 'app-search-page',

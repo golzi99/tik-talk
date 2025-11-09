@@ -1,8 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
-import { DndDirective } from '@tt/common-ui';
+import { DndDirective, ImgUrlPipe, SvgIcon } from '@tt/common-ui';
 import { FormsModule } from '@angular/forms';
-import { ImgUrlPipe, SvgIcon } from '@tt/common-ui';
-import { ProfileService } from '@tt/data-access';
+import { GlobalStoreService } from '@tt/data-access/profile-api';
 
 @Component({
   selector: 'app-avatar-upload',
@@ -12,7 +11,7 @@ import { ProfileService } from '@tt/data-access';
   styleUrl: './avatar-upload.component.scss',
 })
 export class AvatarUploadComponent {
-  profileService = inject(ProfileService);
+  me = inject(GlobalStoreService).me;
   imgPipe = inject(ImgUrlPipe);
 
   avatar: File | null = null;
@@ -44,9 +43,8 @@ export class AvatarUploadComponent {
   }
 
   constructor() {
-    const me = this.profileService.me();
-    if (me?.avatarUrl) {
-      const url = this.imgPipe.transform(me.avatarUrl);
+    if (this.me()?.avatarUrl) {
+      const url = this.imgPipe.transform(this.me()!.avatarUrl);
       this.preview.set(url || this.placeholder);
     } else {
       this.preview.set(this.placeholder);

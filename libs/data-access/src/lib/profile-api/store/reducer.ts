@@ -1,8 +1,8 @@
-import { ProfileState } from '../../profile-api';
+import { ProfilesState } from '../../profile-api';
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { profileActions } from './actions';
 
-export const initialStateProfile: ProfileState = {
+export const initialStateProfiles: ProfilesState = {
   profiles: [],
   profileFilters: {},
 };
@@ -10,7 +10,7 @@ export const initialStateProfile: ProfileState = {
 export const profileFeature = createFeature({
   name: 'profileFeature',
   reducer: createReducer(
-    initialStateProfile,
+    initialStateProfiles,
     on(profileActions.profilesLoaded, (state, payload) => {
       return {
         ...state,

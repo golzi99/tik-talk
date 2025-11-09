@@ -6,8 +6,9 @@ import {
   MessageInputComponent,
   SvgIcon,
 } from '@tt/common-ui';
-import { GlobalStoreService, Post, postsActions } from '@tt/data-access';
 import { Store } from '@ngrx/store';
+import { GlobalStoreService } from '@tt/data-access/profile-api';
+import { Post, postsActions } from '@tt/data-access/posts-api';
 
 @Component({
   selector: 'app-post',

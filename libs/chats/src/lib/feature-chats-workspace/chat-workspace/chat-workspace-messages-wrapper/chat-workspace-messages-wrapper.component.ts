@@ -3,7 +3,7 @@ import { ChatWorkspaceMessageComponent } from './chat-workspace-message/chat-wor
 import { firstValueFrom } from 'rxjs';
 import { DateTime } from 'luxon';
 import { MessageInputComponent } from '@tt/common-ui';
-import { Chat, ChatsService } from '@tt/data-access';
+import { Chat, ChatsService } from '@tt/data-access/chats-api';
 
 @Component({
   selector: 'app-chat-workspace-messages-wrapper',
@@ -18,13 +18,7 @@ export class ChatWorkspaceMessagesWrapperComponent {
   groupedMessages = this.chatsService.groupedChatMessages;
 
   async onSendMessage(messageText: string) {
-    await firstValueFrom(
-      this.chatsService.sendMessage({
-        chatId: this.chat().id,
-        message: messageText,
-      })
-    );
-    await firstValueFrom(this.chatsService.getChatById(this.chat().id));
+    this.chatsService.wsAdapter.sendMessage(messageText, this.chat().id);
   }
 
   formatDaySeparator(date: DateTime): string {

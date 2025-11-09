@@ -10,15 +10,13 @@ import { GlobalStoreService } from './global-store.service';
 })
 export class ProfileService {
   http = inject(HttpClient);
-  #globalStoreService = inject(GlobalStoreService);
   baseApiUrl = 'https://icherniakov.ru/yt-course/';
 
-  me = signal<Profile | null>(null);
+  #globalStoreService = inject(GlobalStoreService);
 
   getMe() {
     return this.http.get<Profile>(`${this.baseApiUrl}account/me`).pipe(
       tap(res => {
-        this.me.set(res);
         this.#globalStoreService.me.set(res);
       })
     );
