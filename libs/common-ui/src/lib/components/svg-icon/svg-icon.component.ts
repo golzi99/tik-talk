@@ -1,9 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
   selector: 'svg-icon',
   imports: [],
-  template: ` <svg [attr.width]="size" [attr.height]="size" [attr.viewBox]="viewBoxBase">
+  template: ` <svg
+    [attr.width]="size"
+    [attr.height]="size"
+    [attr.viewBox]="viewBoxBase"
+  >
     <use [attr.href]="href" />
   </svg>`,
   styles: [
@@ -14,6 +18,7 @@ import { Component, Input } from '@angular/core';
     `,
   ],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SvgIcon {
   @Input() icon: string = '';

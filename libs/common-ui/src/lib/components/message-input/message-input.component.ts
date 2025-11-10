@@ -1,4 +1,10 @@
-import { Component, inject, output, Renderer2 } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  output,
+  Renderer2,
+} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AvatarCircleComponent, SvgIcon } from '@tt/common-ui';
 import { GlobalStoreService } from '@tt/data-access/profile-api';
@@ -8,6 +14,7 @@ import { GlobalStoreService } from '@tt/data-access/profile-api';
   imports: [AvatarCircleComponent, ReactiveFormsModule, SvgIcon, FormsModule],
   templateUrl: './message-input.component.html',
   styleUrl: './message-input.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MessageInputComponent {
   r2 = inject(Renderer2);
