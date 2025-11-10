@@ -1,4 +1,9 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+} from '@angular/core';
 import { SubscriberCard } from './subscriber-card/subscriber-card.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
@@ -25,6 +30,7 @@ import { ChatsService, isErrorMessage } from '@tt/data-access/chats-api';
   templateUrl: './side-bar.component.html',
   standalone: true,
   styleUrl: './side-bar.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SideBar {
   profileService = inject(ProfileService);

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ImgUrlPipe } from '@tt/common-ui';
 import { Profile } from '@tt/data-access/profile-api';
 
@@ -8,6 +8,7 @@ import { Profile } from '@tt/data-access/profile-api';
   templateUrl: './subscriber-card.component.html',
   styleUrl: './subscriber-card.component.scss',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SubscriberCard {
   @Input() profile!: Profile;
