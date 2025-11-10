@@ -1,4 +1,9 @@
-import { Component, inject, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+} from '@angular/core';
 import { CommentComponent } from '../../ui';
 import {
   AvatarCircleComponent,
@@ -21,6 +26,7 @@ import { Post, postsActions } from '@tt/data-access/posts-api';
   ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostComponent {
   store = inject(Store);

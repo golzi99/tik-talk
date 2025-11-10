@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   effect,
   ElementRef,
@@ -21,6 +22,7 @@ import { postsActions, selectPosts } from '@tt/data-access/posts-api';
   imports: [PostComponent, FormsModule, AsyncPipe, MessageInputComponent],
   templateUrl: './post-feed.component.html',
   styleUrl: './post-feed.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostFeedComponent {
   profile = input<Profile>();
