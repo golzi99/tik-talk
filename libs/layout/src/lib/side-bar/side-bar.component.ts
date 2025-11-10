@@ -7,15 +7,14 @@ import {
 import { SubscriberCard } from './subscriber-card/subscriber-card.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
-import { firstValueFrom, Subscription, timer } from 'rxjs';
+import { filter, firstValueFrom, Subscription, take, timer } from 'rxjs';
 import { ImgUrlPipe, SvgIcon } from '@tt/common-ui';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {
-  GlobalStoreService,
-  ProfileService,
-} from '@tt/data-access/profile-api';
+import { ProfileService } from '@tt/data-access/profile-api';
 import { AuthService } from '@tt/data-access/auth-api';
 import { ChatsService, isErrorMessage } from '@tt/data-access/chats-api';
+import { Store } from '@ngrx/store';
+import { globalActions, selectMe } from '@tt/data-access/global-store';
 
 @Component({
   selector: 'app-side-bar',
@@ -37,10 +36,11 @@ export class SideBar {
   authService = inject(AuthService);
   #chatService = inject(ChatsService);
   destroyRef = inject(DestroyRef);
+  store = inject(Store);
 
   subscribers$ = this.profileService.getSubscribersList({ countSubs: 3 });
-  me = inject(GlobalStoreService).me;
   messageCounter = this.#chatService.unreadMessengerCounter;
+  me = this.store.selectSignal(selectMe);
 
   wsSubscription!: Subscription;
 
@@ -79,8 +79,10 @@ export class SideBar {
     this.connectWs();
   }
 
+  // надо подумать, как ответ от диспатча и только потом делать коннект
   async connect() {
-    await firstValueFrom(this.profileService.getMe());
+    this.store.dispatch(globalActions.getMe());
+
     this.#chatService
       .connectWs()
       .pipe(takeUntilDestroyed(this.destroyRef))

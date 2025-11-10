@@ -12,8 +12,8 @@ import {
   SvgIcon,
 } from '@tt/common-ui';
 import { Store } from '@ngrx/store';
-import { GlobalStoreService } from '@tt/data-access/profile-api';
 import { Post, postsActions } from '@tt/data-access/posts-api';
+import { selectMe } from '@tt/data-access/global-store';
 
 @Component({
   selector: 'app-post',
@@ -32,7 +32,7 @@ export class PostComponent {
   store = inject(Store);
 
   post = input<Post>();
-  me = inject(GlobalStoreService).me;
+  me = this.store.selectSignal(selectMe);
 
   get comments() {
     return this.post()!.comments;

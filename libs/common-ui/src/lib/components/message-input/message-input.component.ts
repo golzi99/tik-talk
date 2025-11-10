@@ -7,7 +7,8 @@ import {
 } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AvatarCircleComponent, SvgIcon } from '@tt/common-ui';
-import { GlobalStoreService } from '@tt/data-access/profile-api';
+import { Store } from '@ngrx/store';
+import { selectMe } from '@tt/data-access/global-store';
 
 @Component({
   selector: 'app-message-input',
@@ -17,8 +18,9 @@ import { GlobalStoreService } from '@tt/data-access/profile-api';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MessageInputComponent {
+  store = inject(Store);
   r2 = inject(Renderer2);
-  me = inject(GlobalStoreService).me;
+  me = this.store.selectSignal(selectMe);
 
   textAreaValue: string = '';
   created = output<string>();

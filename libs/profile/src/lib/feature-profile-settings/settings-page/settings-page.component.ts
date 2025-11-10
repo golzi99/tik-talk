@@ -5,7 +5,7 @@ import {
   inject,
   ViewChild,
 } from '@angular/core';
-import { ProfileHeader } from '../../ui';
+import { AvatarUploadComponent, ProfileHeader } from '../../ui';
 import {
   FormControl,
   FormGroup,
@@ -13,11 +13,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
-import { AvatarUploadComponent } from '../../ui';
-import {
-  GlobalStoreService,
-  ProfileService,
-} from '@tt/data-access/profile-api';
+import { ProfileService } from '@tt/data-access/profile-api';
+import { Store } from '@ngrx/store';
+import { globalActions, selectMe } from '@tt/data-access/global-store';
 
 @Component({
   selector: 'app-settings-page',
@@ -28,7 +26,9 @@ import {
 })
 export class SettingsPageComponent {
   profileService = inject(ProfileService);
-  me = inject(GlobalStoreService).me;
+  store = inject(Store);
+
+  me = this.store.selectSignal(selectMe);
 
   @ViewChild(AvatarUploadComponent) avatarUploader!: AvatarUploadComponent;
 
@@ -70,7 +70,7 @@ export class SettingsPageComponent {
       })
     );
 
-    await firstValueFrom(this.profileService.getMe());
+    this.store.dispatch(globalActions.getMe());
   }
 
   splitStack(stack: string | null | string[] | undefined) {
