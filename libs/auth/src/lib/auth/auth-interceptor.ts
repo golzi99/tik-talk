@@ -1,7 +1,18 @@
-import { HttpHandlerFn, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
+import {
+  HttpHandlerFn,
+  HttpInterceptorFn,
+  HttpRequest,
+} from '@angular/common/http';
 import { inject } from '@angular/core';
-import { BehaviorSubject, catchError, filter, switchMap, tap, throwError } from 'rxjs';
-import { AuthService } from '@tt/data-access';
+import {
+  BehaviorSubject,
+  catchError,
+  filter,
+  switchMap,
+  tap,
+  throwError,
+} from 'rxjs';
+import { AuthService } from '@tt/data-access/auth-api';
 
 let isRefreshing$ = new BehaviorSubject<boolean>(false);
 
@@ -47,7 +58,8 @@ const refreshAndProceed = ({
     );
   }
 
-  if (req.url.includes('refresh')) return next(addToken({ req, token: authService.token! }));
+  if (req.url.includes('refresh'))
+    return next(addToken({ req, token: authService.token! }));
 
   return isRefreshing$.pipe(
     filter(isRefreshing => !isRefreshing),

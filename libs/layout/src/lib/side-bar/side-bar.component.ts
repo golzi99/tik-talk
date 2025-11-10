@@ -1,14 +1,27 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { SubscriberCard } from './subscriber-card/subscriber-card.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Subscription, timer } from 'rxjs';
 import { ImgUrlPipe, SvgIcon } from '@tt/common-ui';
-import { AuthService, ProfileService } from '@tt/data-access';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {
+  GlobalStoreService,
+  ProfileService,
+} from '@tt/data-access/profile-api';
+import { AuthService } from '@tt/data-access/auth-api';
+import { ChatsService, isErrorMessage } from '@tt/data-access/chats-api';
 
 @Component({
   selector: 'app-side-bar',
-  imports: [SubscriberCard, RouterLink, SvgIcon, AsyncPipe, ImgUrlPipe, RouterLinkActive],
+  imports: [
+    SubscriberCard,
+    RouterLink,
+    SvgIcon,
+    AsyncPipe,
+    ImgUrlPipe,
+    RouterLinkActive,
+  ],
   templateUrl: './side-bar.component.html',
   standalone: true,
   styleUrl: './side-bar.component.scss',
@@ -16,9 +29,14 @@ import { AuthService, ProfileService } from '@tt/data-access';
 export class SideBar {
   profileService = inject(ProfileService);
   authService = inject(AuthService);
+  #chatService = inject(ChatsService);
+  destroyRef = inject(DestroyRef);
 
   subscribers$ = this.profileService.getSubscribersList({ countSubs: 3 });
-  me = this.profileService.me;
+  me = inject(GlobalStoreService).me;
+  messageCounter = this.#chatService.unreadMessengerCounter;
+
+  wsSubscription!: Subscription;
 
   menuItems = [
     { label: 'Моя страница', icon: 'home', link: '/profile/me' },
@@ -37,7 +55,35 @@ export class SideBar {
     this.authService.logout();
   }
 
-  ngOnInit() {
-    firstValueFrom(this.profileService.getMe());
+  connectWs() {
+    this.wsSubscription?.unsubscribe();
+    this.wsSubscription = this.#chatService
+      .connectWs()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(message => {
+        if (isErrorMessage(message)) {
+          this.reconnect();
+        }
+      });
+  }
+
+  async reconnect() {
+    await firstValueFrom(this.authService.refreshAuthToken());
+    await firstValueFrom(timer(2000));
+    this.connectWs();
+  }
+
+  async connect() {
+    await firstValueFrom(this.profileService.getMe());
+    this.#chatService
+      .connectWs()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
+  }
+
+  constructor() {
+    this.connect();
+
+    // this.connectWs();
   }
 }

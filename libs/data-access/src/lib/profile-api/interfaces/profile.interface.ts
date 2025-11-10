@@ -10,3 +10,8 @@ export interface Profile {
   city: string;
   description: string;
 }
+
+export interface ProfilesState {
+  profiles: Profile[];
+  profileFilters: Record<string, any>;
+}

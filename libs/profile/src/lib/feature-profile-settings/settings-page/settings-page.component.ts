@@ -1,9 +1,17 @@
 import { Component, effect, inject, ViewChild } from '@angular/core';
 import { ProfileHeader } from '../../ui';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { AvatarUploadComponent } from '../../ui';
-import { ProfileService } from '@tt/data-access';
+import {
+  GlobalStoreService,
+  ProfileService,
+} from '@tt/data-access/profile-api';
 
 @Component({
   selector: 'app-settings-page',
@@ -13,15 +21,16 @@ import { ProfileService } from '@tt/data-access';
 })
 export class SettingsPageComponent {
   profileService = inject(ProfileService);
-
-  me = this.profileService.me;
+  me = inject(GlobalStoreService).me;
 
   @ViewChild(AvatarUploadComponent) avatarUploader!: AvatarUploadComponent;
 
   form = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
-    username: new FormControl({ value: '', disabled: true }, [Validators.required]),
+    username: new FormControl({ value: '', disabled: true }, [
+      Validators.required,
+    ]),
     description: new FormControl(''),
     stack: new FormControl(''),
   });
@@ -29,8 +38,8 @@ export class SettingsPageComponent {
   constructor() {
     effect(() => {
       this.form.patchValue({
-        ...this.profileService.me(),
-        stack: this.mergeStack(this.profileService.me()?.stack),
+        ...this.me(),
+        stack: this.mergeStack(this.me()?.stack),
       });
     });
   }
@@ -42,7 +51,9 @@ export class SettingsPageComponent {
     if (this.form.invalid) return;
 
     if (this.avatarUploader.avatar) {
-      firstValueFrom(this.profileService.uploadAvatar(this.avatarUploader.avatar));
+      firstValueFrom(
+        this.profileService.uploadAvatar(this.avatarUploader.avatar)
+      );
     }
     firstValueFrom(
       //@ts-ignore

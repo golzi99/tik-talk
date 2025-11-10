@@ -1,6 +1,6 @@
 @if (profile() && isMe$ | async) {
   <app-message-input (created)="onCreatePost($event)"> </app-message-input>
 }
-@for (post of feed(); track post.id) {
+@for (post of news(); track post.id) {
   <app-post [post]="post" />
 }

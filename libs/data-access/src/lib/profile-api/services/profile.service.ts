@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, tap } from 'rxjs';
 import { Profile } from '../interfaces/profile.interface';
@@ -10,16 +10,13 @@ import { GlobalStoreService } from './global-store.service';
 })
 export class ProfileService {
   http = inject(HttpClient);
-  #globalStoreService = inject(GlobalStoreService);
   baseApiUrl = 'https://icherniakov.ru/yt-course/';
 
-  me = signal<Profile | null>(null);
-  filteredProfiles = signal<Profile[]>([]);
+  #globalStoreService = inject(GlobalStoreService);
 
   getMe() {
     return this.http.get<Profile>(`${this.baseApiUrl}account/me`).pipe(
       tap(res => {
-        this.me.set(res);
         this.#globalStoreService.me.set(res);
       })
     );
@@ -33,7 +30,9 @@ export class ProfileService {
     const { countSubs, accountId } = payload;
 
     return this.http
-      .get<Pageble<Profile>>(`${this.baseApiUrl}account/subscribers/${accountId ? accountId : ''}`)
+      .get<
+        Pageble<Profile>
+      >(`${this.baseApiUrl}account/subscribers/${accountId ? accountId : ''}`)
       .pipe(map(res => res.items.slice(0, countSubs)));
   }
 
@@ -49,14 +48,11 @@ export class ProfileService {
   }
 
   filterProfiles(params: Record<string, any>) {
-    return this.http
-      .get<Pageble<Profile>>(`${this.baseApiUrl}account/accounts`, {
+    return this.http.get<Pageble<Profile>>(
+      `${this.baseApiUrl}account/accounts`,
+      {
         params,
-      })
-      .pipe(
-        tap(res => {
-          this.filteredProfiles.set(res.items);
-        })
-      );
+      }
+    );
   }
 }

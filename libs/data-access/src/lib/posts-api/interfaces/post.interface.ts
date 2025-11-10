@@ -1,5 +1,9 @@
 import { Profile } from '../../profile-api';
 
+export interface PostsState {
+  posts: Post[];
+}
+
 export interface PostCreateDto {
   title?: string;
   content: string;

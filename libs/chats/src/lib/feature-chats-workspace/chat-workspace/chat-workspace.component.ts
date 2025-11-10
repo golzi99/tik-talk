@@ -4,11 +4,15 @@ import { ChatWorkspaceMessagesWrapperComponent } from './chat-workspace-messages
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, of, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
-import { ChatsService } from '@tt/data-access';
+import { ChatsService } from '@tt/data-access/chats-api';
 
 @Component({
   selector: 'app-chat-workspace',
-  imports: [ChatWorkspaceHeaderComponent, ChatWorkspaceMessagesWrapperComponent, AsyncPipe],
+  imports: [
+    ChatWorkspaceHeaderComponent,
+    ChatWorkspaceMessagesWrapperComponent,
+    AsyncPipe,
+  ],
   templateUrl: './chat-workspace.component.html',
   styleUrl: './chat-workspace.component.scss',
 })

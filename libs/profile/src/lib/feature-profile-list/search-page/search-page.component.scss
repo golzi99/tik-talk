@@ -7,6 +7,8 @@
 
 .profile-card__wrapper {
   display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: min-content;
   grid-gap: 8px;
   overflow-y: scroll;
   padding-right: 12px;
