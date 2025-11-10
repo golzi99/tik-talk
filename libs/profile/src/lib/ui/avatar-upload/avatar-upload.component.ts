@@ -1,4 +1,9 @@
-import { Component, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 import { DndDirective, ImgUrlPipe, SvgIcon } from '@tt/common-ui';
 import { FormsModule } from '@angular/forms';
 import { GlobalStoreService } from '@tt/data-access/profile-api';
@@ -9,6 +14,7 @@ import { GlobalStoreService } from '@tt/data-access/profile-api';
   providers: [ImgUrlPipe],
   templateUrl: './avatar-upload.component.html',
   styleUrl: './avatar-upload.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AvatarUploadComponent {
   me = inject(GlobalStoreService).me;

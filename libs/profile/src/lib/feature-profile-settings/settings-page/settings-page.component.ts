@@ -1,4 +1,10 @@
-import { Component, effect, inject, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  ViewChild,
+} from '@angular/core';
 import { ProfileHeader } from '../../ui';
 import {
   FormControl,
@@ -18,6 +24,7 @@ import {
   imports: [ProfileHeader, ReactiveFormsModule, AvatarUploadComponent],
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsPageComponent {
   profileService = inject(ProfileService);
@@ -44,24 +51,26 @@ export class SettingsPageComponent {
     });
   }
 
-  onSave() {
+  async onSave() {
     this.form.markAllAsTouched();
     this.form.updateValueAndValidity();
 
     if (this.form.invalid) return;
 
     if (this.avatarUploader.avatar) {
-      firstValueFrom(
+      await firstValueFrom(
         this.profileService.uploadAvatar(this.avatarUploader.avatar)
       );
     }
-    firstValueFrom(
+    await firstValueFrom(
       //@ts-ignore
       this.profileService.patchProfile({
         ...this.form.value,
         stack: this.splitStack(this.form.value.stack),
       })
     );
+
+    await firstValueFrom(this.profileService.getMe());
   }
 
   splitStack(stack: string | null | string[] | undefined) {
