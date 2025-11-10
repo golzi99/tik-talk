@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   inject,
   input,
@@ -8,6 +9,7 @@ import { ChatWorkspaceMessageComponent } from './chat-workspace-message/chat-wor
 import { DateTime } from 'luxon';
 import { MessageInputComponent } from '@tt/common-ui';
 import { Chat, ChatsService } from '@tt/data-access/chats-api';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-chat-workspace-messages-wrapper',
@@ -19,6 +21,7 @@ import { Chat, ChatsService } from '@tt/data-access/chats-api';
 export class ChatWorkspaceMessagesWrapperComponent {
   chatsService = inject(ChatsService);
   chat = input.required<Chat>();
+  cdRef = inject(ChangeDetectorRef);
 
   groupedMessages = this.chatsService.groupedChatMessages;
 

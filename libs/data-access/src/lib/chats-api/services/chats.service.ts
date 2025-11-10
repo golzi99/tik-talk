@@ -6,7 +6,7 @@ import {
   LastMessageResponse,
   Message,
 } from '../interfaces/chats.interface';
-import { map, Observable } from 'rxjs';
+import { map, Observable, startWith, Subject, switchMap } from 'rxjs';
 import { DateTime } from 'luxon';
 import { AuthService } from '../../auth-api';
 import { ChatWsMessage } from '../interfaces/chat-ws-message.interface';
@@ -24,6 +24,7 @@ export class ChatsService {
   http = inject(HttpClient);
   store = inject(Store);
   #authService = inject(AuthService);
+
   me = this.store.selectSignal(selectMe);
 
   baseApiUrl = 'https://icherniakov.ru/yt-course/';
@@ -31,8 +32,11 @@ export class ChatsService {
   chatApiUrl = `${this.baseApiUrl}chat/`;
   messageApiUrl = `${this.baseApiUrl}message/`;
 
+  readonly refreshChats$ = new Subject<void>();
+
   groupedChatMessages = signal<GroupChatMessages[]>([]);
   unreadMessengerCounter = signal<number | null>(null);
+
   companion = computed(() => {
     const groupChatMessages = this.groupedChatMessages()[0];
 
@@ -49,6 +53,13 @@ export class ChatsService {
 
     return companionMessage?.user || null;
   });
+
+  myChats$ = this.refreshChats$.pipe(
+    startWith(void 0),
+    switchMap(() =>
+      this.http.get<LastMessageResponse[]>(`${this.chatApiUrl}get_my_chats/`)
+    )
+  );
 
   connectWs() {
     return this.wsAdapter.connect({
@@ -76,11 +87,11 @@ export class ChatsService {
         .setZone('local')
         .setLocale('ru');
 
-      const existingGroup = this.groupedChatMessages().find(group =>
-        group.dateTime.hasSame(createdAt, 'day')
-      );
+      // const existingGroup = this.groupedChatMessages().find(group =>
+      //   group.dateTime.hasSame(createdAt, 'day')
+      // );
 
-      const patchedMessages: Message = {
+      const patchedMessage: Message = {
         id: message.data.id,
         userFromId: message.data.author,
         personalChatId: message.data.chat_id,
@@ -92,14 +103,36 @@ export class ChatsService {
           message.data.author === this.me()?.id ? this.me() : this.companion(),
       };
 
-      if (existingGroup) {
-        existingGroup.messages.push(patchedMessages);
-      } else {
-        this.groupedChatMessages().push({
-          dateTime: createdAt,
-          messages: [patchedMessages],
-        });
-      }
+      // if (existingGroup) {
+      //   existingGroup.messages.push(patchedMessage);
+      // } else {
+      //   this.groupedChatMessages().push({
+      //     dateTime: createdAt,
+      //     messages: [patchedMessage],
+      //   });
+      // }
+
+      this.groupedChatMessages.update(groups => {
+        const existingGroup = groups.find(g =>
+          g.dateTime.hasSame(createdAt, 'day')
+        );
+
+        if (existingGroup) {
+          const updatedGroups = groups.map(group =>
+            group === existingGroup
+              ? { ...group, messages: [...group.messages, patchedMessage] }
+              : group
+          );
+          return [...updatedGroups];
+        } else {
+          return [
+            ...groups,
+            { dateTime: createdAt, messages: [patchedMessage] },
+          ];
+        }
+      });
+
+      this.refreshChats$.next();
     }
   };
 

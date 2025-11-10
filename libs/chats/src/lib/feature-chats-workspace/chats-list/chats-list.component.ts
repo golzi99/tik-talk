@@ -24,7 +24,7 @@ export class ChatsListComponent {
 
   filterChatsControl = new FormControl();
 
-  chats$ = this.chatsService.getMyChats().pipe(
+  chats$ = this.chatsService.myChats$.pipe(
     switchMap(chats => {
       return this.filterChatsControl.valueChanges.pipe(
         startWith(''),

@@ -1,8 +1,12 @@
 <div class="message-wrapper mb16">
   @for (date of groupedMessages(); track date.dateTime) {
-    <span class="day-separator medium-text">{{ formatDaySeparator(date.dateTime) }}</span>
+    <span class="day-separator medium-text">{{
+      formatDaySeparator(date.dateTime)
+    }}</span>
     @for (message of date.messages; track message.id) {
-      <app-chat-workspace-message [message]="message"></app-chat-workspace-message>
+      <app-chat-workspace-message
+        [message]="message"
+      ></app-chat-workspace-message>
     }
   }
 </div>
