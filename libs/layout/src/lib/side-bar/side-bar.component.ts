@@ -74,24 +74,18 @@ export class SideBar {
   }
 
   async reconnect() {
-    await firstValueFrom(this.authService.refreshAuthToken());
+    // await firstValueFrom(this.authService.refreshAuthToken());
     await firstValueFrom(timer(2000));
     this.connectWs();
   }
 
-  // надо подумать, как ответ от диспатча и только потом делать коннект
-  async connect() {
-    this.store.dispatch(globalActions.getMe());
-
-    this.#chatService
-      .connectWs()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe();
-  }
-
   constructor() {
-    this.connect();
+    this.store.dispatch(globalActions.getMe());
+    this.connectWs();
 
-    // this.connectWs();
+    // this.wsSubscription = this.#chatService
+    //   .connectWs()
+    //   .pipe(takeUntilDestroyed(this.destroyRef))
+    //   .subscribe();
   }
 }
