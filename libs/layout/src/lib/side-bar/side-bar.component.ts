@@ -7,7 +7,7 @@ import {
 import { SubscriberCard } from './subscriber-card/subscriber-card.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
-import { filter, firstValueFrom, Subscription, take, timer } from 'rxjs';
+import { firstValueFrom, Subscription, timer } from 'rxjs';
 import { ImgUrlPipe, SvgIcon } from '@tt/common-ui';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProfileService } from '@tt/data-access/profile-api';
@@ -58,11 +58,14 @@ export class SideBar {
   }
 
   logout(): void {
+    this.wsSubscription?.unsubscribe();
+    this.#chatService.disconnectWs();
     this.authService.logout();
   }
 
   connectWs() {
     this.wsSubscription?.unsubscribe();
+    this.#chatService.disconnectWs();
     this.wsSubscription = this.#chatService
       .connectWs()
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -74,7 +77,6 @@ export class SideBar {
   }
 
   async reconnect() {
-    // await firstValueFrom(this.authService.refreshAuthToken());
     await firstValueFrom(timer(2000));
     this.connectWs();
   }
@@ -82,10 +84,5 @@ export class SideBar {
   constructor() {
     this.store.dispatch(globalActions.getMe());
     this.connectWs();
-
-    // this.wsSubscription = this.#chatService
-    //   .connectWs()
-    //   .pipe(takeUntilDestroyed(this.destroyRef))
-    //   .subscribe();
   }
 }
