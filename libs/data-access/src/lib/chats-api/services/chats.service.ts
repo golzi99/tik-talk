@@ -27,7 +27,7 @@ export class ChatsService {
 
   me = this.store.selectSignal(selectMe);
 
-  baseApiUrl = 'https://icherniakov.ru/yt-course/';
+  baseApiUrl = '/yt-course/';
 
   chatApiUrl = `${this.baseApiUrl}chat/`;
   messageApiUrl = `${this.baseApiUrl}message/`;
