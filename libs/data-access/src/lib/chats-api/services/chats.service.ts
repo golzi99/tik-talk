@@ -6,7 +6,7 @@ import {
   LastMessageResponse,
   Message,
 } from '../interfaces/chats.interface';
-import { map, Observable, startWith, Subject, switchMap } from 'rxjs';
+import { map, Observable, startWith, Subject, switchMap, tap } from 'rxjs';
 import { DateTime } from 'luxon';
 import { AuthService } from '../../auth-api';
 import { ChatWsMessage } from '../interfaces/chat-ws-message.interface';
@@ -34,25 +34,9 @@ export class ChatsService {
 
   readonly refreshChats$ = new Subject<void>();
 
-  groupedChatMessages = signal<GroupChatMessages[]>([]);
+  groupedActiveChatMessages = signal<GroupChatMessages[]>([]);
   unreadMessengerCounter = signal<number | null>(null);
-
-  companion = computed(() => {
-    const groupChatMessages = this.groupedChatMessages()[0];
-
-    if (
-      !groupChatMessages.messages ||
-      groupChatMessages.messages.length === 0
-    ) {
-      return null;
-    }
-
-    const companionMessage = groupChatMessages.messages.find(
-      (message: Message) => !message.isMine
-    );
-
-    return companionMessage?.user || null;
-  });
+  activeChat = signal<Chat | null>(null);
 
   myChats$ = this.refreshChats$.pipe(
     startWith(void 0),
@@ -81,6 +65,10 @@ export class ChatsService {
     }
 
     if (isNewMessage(message)) {
+      const me = this.me();
+      const activeChat = this.activeChat();
+      if (!me || !activeChat) return;
+
       const createdAt = DateTime.fromFormat(
         message.data.created_at,
         'yyyy-MM-dd HH:mm:ss',
@@ -102,9 +90,8 @@ export class ChatsService {
         text: message.data.message,
         createdAt: createdAt.toString(),
         isRead: false,
-        isMine: message.data.author === this.me()?.id,
-        user:
-          message.data.author === this.me()?.id ? this.me() : this.companion(),
+        isMine: message.data.author === me.id,
+        user: message.data.author === me.id ? me : activeChat.companion,
       };
 
       // if (existingGroup) {
@@ -116,7 +103,7 @@ export class ChatsService {
       //   });
       // }
 
-      this.groupedChatMessages.update(groups => {
+      this.groupedActiveChatMessages.update(groups => {
         const existingGroup = groups.find(g =>
           g.dateTime.hasSame(createdAt, 'day')
         );
@@ -196,7 +183,7 @@ export class ChatsService {
             isMine: message.userFromId === this.me()?.id,
           };
         });
-        this.groupedChatMessages.set(groupedMessages);
+        this.groupedActiveChatMessages.set(groupedMessages);
         return {
           ...chat,
           companion:
@@ -206,6 +193,9 @@ export class ChatsService {
           messages: patchedMessages,
           groupedMessages: groupedMessages,
         };
+      }),
+      tap(res => {
+        this.activeChat.set(res);
       })
     );
   }
