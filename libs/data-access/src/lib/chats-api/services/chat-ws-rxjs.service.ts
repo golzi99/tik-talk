@@ -30,6 +30,7 @@ export class ChatWsRxjsService implements ChatWsService {
 
   disconnect(): void {
     this.#socket?.complete();
+    this.#socket = null;
   }
 
   sendMessage(text: string, chatId: number): void {

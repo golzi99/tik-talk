@@ -1,7 +1,13 @@
-import { Component, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 import { DndDirective, ImgUrlPipe, SvgIcon } from '@tt/common-ui';
 import { FormsModule } from '@angular/forms';
-import { GlobalStoreService } from '@tt/data-access/profile-api';
+import { selectMe } from '@tt/data-access/global-store';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-avatar-upload',
@@ -9,11 +15,13 @@ import { GlobalStoreService } from '@tt/data-access/profile-api';
   providers: [ImgUrlPipe],
   templateUrl: './avatar-upload.component.html',
   styleUrl: './avatar-upload.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AvatarUploadComponent {
-  me = inject(GlobalStoreService).me;
+  store = inject(Store);
   imgPipe = inject(ImgUrlPipe);
 
+  me = this.store.selectSignal(selectMe);
   avatar: File | null = null;
   placeholder = '/assets/imgs/placeholder-avatar.svg';
 

@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ImgUrlPipe, SvgIcon } from '@tt/common-ui';
 import { Profile } from '@tt/data-access/profile-api';
@@ -9,6 +9,7 @@ import { Profile } from '@tt/data-access/profile-api';
   templateUrl: './profile-card.component.html',
   standalone: true,
   styleUrl: './profile-card.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileCard {
   profile = input.required<Profile>();

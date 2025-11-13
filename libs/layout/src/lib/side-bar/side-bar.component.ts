@@ -1,16 +1,20 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+} from '@angular/core';
 import { SubscriberCard } from './subscriber-card/subscriber-card.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { firstValueFrom, Subscription, timer } from 'rxjs';
 import { ImgUrlPipe, SvgIcon } from '@tt/common-ui';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {
-  GlobalStoreService,
-  ProfileService,
-} from '@tt/data-access/profile-api';
+import { ProfileService } from '@tt/data-access/profile-api';
 import { AuthService } from '@tt/data-access/auth-api';
 import { ChatsService, isErrorMessage } from '@tt/data-access/chats-api';
+import { Store } from '@ngrx/store';
+import { globalActions, selectMe } from '@tt/data-access/global-store';
 
 @Component({
   selector: 'app-side-bar',
@@ -25,16 +29,18 @@ import { ChatsService, isErrorMessage } from '@tt/data-access/chats-api';
   templateUrl: './side-bar.component.html',
   standalone: true,
   styleUrl: './side-bar.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SideBar {
   profileService = inject(ProfileService);
   authService = inject(AuthService);
   #chatService = inject(ChatsService);
   destroyRef = inject(DestroyRef);
+  store = inject(Store);
 
   subscribers$ = this.profileService.getSubscribersList({ countSubs: 3 });
-  me = inject(GlobalStoreService).me;
   messageCounter = this.#chatService.unreadMessengerCounter;
+  me = this.store.selectSignal(selectMe);
 
   wsSubscription!: Subscription;
 
@@ -52,11 +58,14 @@ export class SideBar {
   }
 
   logout(): void {
+    this.wsSubscription?.unsubscribe();
+    this.#chatService.disconnectWs();
     this.authService.logout();
   }
 
   connectWs() {
     this.wsSubscription?.unsubscribe();
+    this.#chatService.disconnectWs();
     this.wsSubscription = this.#chatService
       .connectWs()
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -68,22 +77,12 @@ export class SideBar {
   }
 
   async reconnect() {
-    await firstValueFrom(this.authService.refreshAuthToken());
     await firstValueFrom(timer(2000));
     this.connectWs();
   }
 
-  async connect() {
-    await firstValueFrom(this.profileService.getMe());
-    this.#chatService
-      .connectWs()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe();
-  }
-
   constructor() {
-    this.connect();
-
-    // this.connectWs();
+    this.store.dispatch(globalActions.getMe());
+    this.connectWs();
   }
 }

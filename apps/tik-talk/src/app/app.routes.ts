@@ -9,6 +9,7 @@ import { provideState } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { PostsEffects, postsFeature } from '@tt/data-access/posts-api';
 import { profileFeature, ProfileEffects } from '@tt/data-access/profile-api';
+import { GlobalEffects, globalFeature } from '@tt/data-access/global-store';
 
 export const routes: Routes = [
   {
@@ -34,6 +35,7 @@ export const routes: Routes = [
       { path: 'experimental', component: FormsExperimentalComponent },
     ],
     canActivate: [accessGuard],
+    providers: [provideState(globalFeature), provideEffects(GlobalEffects)],
   },
   { path: 'login', component: LoginPageComponent },
 ];

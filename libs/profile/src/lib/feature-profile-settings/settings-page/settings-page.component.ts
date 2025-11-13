@@ -1,5 +1,11 @@
-import { Component, effect, inject, ViewChild } from '@angular/core';
-import { ProfileHeader } from '../../ui';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  ViewChild,
+} from '@angular/core';
+import { AvatarUploadComponent, ProfileHeader } from '../../ui';
 import {
   FormControl,
   FormGroup,
@@ -7,21 +13,22 @@ import {
   Validators,
 } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
-import { AvatarUploadComponent } from '../../ui';
-import {
-  GlobalStoreService,
-  ProfileService,
-} from '@tt/data-access/profile-api';
+import { ProfileService } from '@tt/data-access/profile-api';
+import { Store } from '@ngrx/store';
+import { globalActions, selectMe } from '@tt/data-access/global-store';
 
 @Component({
   selector: 'app-settings-page',
   imports: [ProfileHeader, ReactiveFormsModule, AvatarUploadComponent],
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsPageComponent {
   profileService = inject(ProfileService);
-  me = inject(GlobalStoreService).me;
+  store = inject(Store);
+
+  me = this.store.selectSignal(selectMe);
 
   @ViewChild(AvatarUploadComponent) avatarUploader!: AvatarUploadComponent;
 
@@ -44,24 +51,26 @@ export class SettingsPageComponent {
     });
   }
 
-  onSave() {
+  async onSave() {
     this.form.markAllAsTouched();
     this.form.updateValueAndValidity();
 
     if (this.form.invalid) return;
 
     if (this.avatarUploader.avatar) {
-      firstValueFrom(
+      await firstValueFrom(
         this.profileService.uploadAvatar(this.avatarUploader.avatar)
       );
     }
-    firstValueFrom(
+    await firstValueFrom(
       //@ts-ignore
       this.profileService.patchProfile({
         ...this.form.value,
         stack: this.splitStack(this.form.value.stack),
       })
     );
+
+    this.store.dispatch(globalActions.getMe());
   }
 
   splitStack(stack: string | null | string[] | undefined) {
