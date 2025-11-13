@@ -14,4 +14,6 @@ export interface Profile {
 export interface ProfilesState {
   profiles: Profile[];
   profileFilters: Record<string, any>;
+  page: number;
+  size: number;
 }
