@@ -68,7 +68,7 @@ export class SideBar {
     this.#chatService.disconnectWs();
     this.wsSubscription = this.#chatService
       .connectWs()
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntilDestroyed(this.destroyRef)) // по идеи здесь не нужен destroyRef?
       .subscribe(message => {
         if (isErrorMessage(message)) {
           this.reconnect();
