@@ -1,5 +1,9 @@
 @if (profile() && isMe$ | async) {
-  <app-message-input (created)="onCreatePost($event)"> </app-message-input>
+  <app-message-input
+    (created)="onCreatePost($event)"
+    class="post-create__input"
+  >
+  </app-message-input>
 }
 @for (post of news(); track post.id) {
   <app-post [post]="post" />

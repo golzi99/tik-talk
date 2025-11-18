@@ -20,6 +20,8 @@
     "@maskito/angular": "^4.0.0",
     "@maskito/core": "^4.0.0",
     "@maskito/kit": "^4.0.0",
+    "@ng-web-apis/common": "^4.12.2",
+    "@ng-web-apis/intersection-observer": "^4.12.2",
     "@ngrx/effects": "^20.1.0",
     "@ngrx/store": "^20.1.0",
     "@types/luxon": "^3.7.1",

@@ -9,7 +9,7 @@ import { Pageble } from '../interfaces/pageble.interface';
 })
 export class ProfileService {
   http = inject(HttpClient);
-  baseApiUrl = 'https://icherniakov.ru/yt-course/';
+  baseApiUrl = '/yt-course/';
 
   getMe() {
     return this.http.get<Profile>(`${this.baseApiUrl}account/me`);

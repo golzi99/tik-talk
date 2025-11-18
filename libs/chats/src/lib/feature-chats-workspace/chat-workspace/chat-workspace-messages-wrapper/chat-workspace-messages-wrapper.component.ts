@@ -23,7 +23,7 @@ export class ChatWorkspaceMessagesWrapperComponent {
   chat = input.required<Chat>();
   cdRef = inject(ChangeDetectorRef);
 
-  groupedMessages = this.chatsService.groupedChatMessages;
+  groupedMessages = this.chatsService.groupedActiveChatMessages;
 
   async onSendMessage(messageText: string) {
     this.chatsService.wsAdapter.sendMessage(messageText, this.chat().id);
