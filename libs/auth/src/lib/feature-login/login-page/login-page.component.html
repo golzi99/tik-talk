@@ -1,14 +1,8 @@
 <form class="login-form" [formGroup]="form" (ngSubmit)="onSubmit()">
   <h1 class="h1 mb60">Вход</h1>
-  <label class="tt-control-label mb16">
+  <tt-input type="text" placeholder="Введите логин" formControlName="username">
     Telegram username
-    <div class="name-input">
-      <input formControlName="username" class="tt-input" type="text" placeholder="Введите логин" />
-      <button class="telegram-btn" type="button">
-        <svg-icon icon="telegram" [size]="19" viewBoxBase="0 0 19 17"></svg-icon>
-      </button>
-    </div>
-  </label>
+  </tt-input>
   <label class="tt-control-label mb32">
     Пароль
     <div class="password-input">
@@ -24,7 +18,11 @@
         (click)="isPasswordVisible.set(!isPasswordVisible())"
         [class.active]="isPasswordVisible()"
       >
-        <svg-icon icon="eye-with-slash" [size]="19" viewBoxBase="0 0 19 17"></svg-icon>
+        <svg-icon
+          icon="eye-with-slash"
+          [size]="19"
+          viewBoxBase="0 0 19 17"
+        ></svg-icon>
       </button>
     </div>
   </label>
