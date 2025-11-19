@@ -3,7 +3,7 @@
   <div class="name-input">
     <input
       class="tt-input"
-      [ngModel]="value"
+      [ngModel]="value()"
       (ngModelChange)="onModelChange($event)"
       [type]="type()"
       [placeholder]="placeholder()"

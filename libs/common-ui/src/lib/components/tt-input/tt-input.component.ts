@@ -30,14 +30,14 @@ export class TtInputComponent implements ControlValueAccessor {
   placeholder = input<string>('');
   disabled = signal<boolean>(false);
 
-  value: string | null = null;
+  value = signal<string | null>(null);
 
   onChange(value: string | null): void {}
 
   onTouched() {}
 
   writeValue(val: string | null): void {
-    this.value = val;
+    this.value.set(val);
   }
 
   registerOnChange(fn: any): void {
@@ -53,6 +53,7 @@ export class TtInputComponent implements ControlValueAccessor {
   }
 
   onModelChange(val: string | null) {
+    this.value.set(val);
     this.onChange(val);
   }
 }
