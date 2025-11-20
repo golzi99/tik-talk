@@ -80,10 +80,18 @@ export class AddressInputComponent implements ControlValueAccessor {
   onSuggestionPick(suggest: AddressSuggestion) {
     this.isDropDownOpened.set(false);
     this.addressForm.patchValue({
-      city: suggest.data.city,
-      street: suggest.data.street,
-      building: suggest.data.house,
-      flat: suggest.data.flat,
+      city: suggest.data.city
+        ? `${suggest.data.city_type}.${suggest.data.city}`
+        : '',
+      street: suggest.data.street
+        ? `${suggest.data.street_type}.${suggest.data.street}`
+        : '',
+      building: suggest.data.house
+        ? `${suggest.data.house_type}.${suggest.data.house}`
+        : '',
+      flat: suggest.data.flat
+        ? `${suggest.data.flat_type}.${suggest.data.flat}`
+        : '',
     });
     this.innerSearchControl.patchValue(
       this.composeAddressString(this.addressForm),
@@ -105,10 +113,10 @@ export class AddressInputComponent implements ControlValueAccessor {
   }
 
   private composeAddressString(form: FormGroup): string {
-    const city = form.value.city ? `г.${form.value.city}` : '';
-    const street = form.value.street ? ` ул.${form.value.street}` : '';
-    const building = form.value.building ? ` д.${form.value.building}` : '';
-    const flat = form.value.flat ? ` кв.${form.value.flat}` : '';
+    const city = form.value.city ? `${form.value.city}` : '';
+    const street = form.value.street ? ` ${form.value.street}` : '';
+    const building = form.value.building ? ` ${form.value.building}` : '';
+    const flat = form.value.flat ? ` ${form.value.flat}` : '';
 
     return `${city}${street}${building}${flat}`.trim();
   }
@@ -116,10 +124,10 @@ export class AddressInputComponent implements ControlValueAccessor {
   private parseAddressString(value: string | null) {
     if (!value) return { city: '', street: '', building: '', flat: '' };
 
-    const city = value.match(/г\.(.+?)(?=\sул\.|$)/)?.[1]?.trim() ?? '';
-    const street = value.match(/ул\.(.+?)(?=\sд\.|$)/)?.[1]?.trim() ?? '';
-    const building = value.match(/д\.(.+?)(?=\sкв\.|$)/)?.[1]?.trim() ?? '';
-    const flat = value.match(/кв\.(.+)$/)?.[1]?.trim() ?? '';
+    const city = value.match(/г\.(.+?)(?=\sул\.|$)/)?.[0]?.trim() ?? '';
+    const street = value.match(/ул\.(.+?)(?=\sд\.|$)/)?.[0]?.trim() ?? '';
+    const building = value.match(/д\.(.+?)(?=\sкв\.|$)/)?.[0]?.trim() ?? '';
+    const flat = value.match(/кв\.(.+)$/)?.[0]?.trim() ?? '';
 
     return { city, street, building, flat };
   }
