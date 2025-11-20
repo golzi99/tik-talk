@@ -12,7 +12,7 @@ import {
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { TtInputComponent } from '@tt/common-ui';
+import { AddressPipe, TtInputComponent } from '@tt/common-ui';
 import { AddressSuggestion, DadataService } from '@tt/data-access/dadata-api';
 import { debounceTime, switchMap, tap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
@@ -20,7 +20,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'tt-address-input',
-  imports: [TtInputComponent, ReactiveFormsModule, AsyncPipe],
+  imports: [TtInputComponent, ReactiveFormsModule, AsyncPipe, AddressPipe],
   standalone: true,
   templateUrl: './address-input.component.html',
   styleUrl: './address-input.component.scss',

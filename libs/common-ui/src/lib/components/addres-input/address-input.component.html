@@ -10,8 +10,7 @@
     <div class="suggestions-dropdown">
       @for (suggest of suggestions; track suggest) {
         <button (click)="onSuggestionPick(suggest)" class="suggest-btn">
-          {{ suggest.data.city }} {{ suggest.data.street }}
-          {{ suggest.data.house }} {{ suggest.data.flat }}
+          {{ suggest | address }}
         </button>
       }
     </div>
