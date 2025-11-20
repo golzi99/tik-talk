@@ -16,6 +16,7 @@ import { TtInputComponent } from '@tt/common-ui';
 import { AddressSuggestion, DadataService } from '@tt/data-access/dadata-api';
 import { debounceTime, switchMap, tap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'tt-address-input',
@@ -57,20 +58,9 @@ export class AddressInputComponent implements ControlValueAccessor {
   );
 
   writeValue(val: string): void {
-    const splitVal = val
-      ? val.split(' ').map(val => {
-          return val.split('.')[1];
-        })
-      : [];
-    this.innerSearchControl.patchValue(val, {
-      emitEvent: false,
-    });
-    this.addressForm.patchValue({
-      city: splitVal[0] || '',
-      street: splitVal[1] || '',
-      building: splitVal[2] || '',
-      flat: splitVal[3] || '',
-    });
+    const parsed = this.parseAddressString(val);
+    this.addressForm.patchValue(parsed, { emitEvent: false });
+    this.innerSearchControl.patchValue(val, { emitEvent: false });
   }
 
   registerOnChange(fn: any): void {
@@ -88,7 +78,6 @@ export class AddressInputComponent implements ControlValueAccessor {
   onTouched() {}
 
   onSuggestionPick(suggest: AddressSuggestion) {
-    const fullAddress = `г.${suggest.data.city} ул.${suggest.data.street} д.${suggest.data.house} кв.${suggest.data.flat}`;
     this.isDropDownOpened.set(false);
     this.addressForm.patchValue({
       city: suggest.data.city,
@@ -97,11 +86,41 @@ export class AddressInputComponent implements ControlValueAccessor {
       flat: suggest.data.flat,
     });
     this.innerSearchControl.patchValue(
-      `г.${suggest.data.city} ул.${suggest.data.street} д.${suggest.data.house} кв.${suggest.data.flat}`,
+      this.composeAddressString(this.addressForm),
       {
         emitEvent: false,
       }
     );
-    this.onChange(fullAddress);
+    this.onChange(this.composeAddressString(this.addressForm));
+  }
+
+  constructor() {
+    this.addressForm.valueChanges
+      .pipe(debounceTime(200), takeUntilDestroyed())
+      .subscribe(value => {
+        const newString = this.composeAddressString(this.addressForm);
+        this.innerSearchControl.patchValue(newString, { emitEvent: false });
+        this.onChange(newString);
+      });
+  }
+
+  private composeAddressString(form: FormGroup): string {
+    const city = form.value.city ? `г.${form.value.city}` : '';
+    const street = form.value.street ? ` ул.${form.value.street}` : '';
+    const building = form.value.building ? ` д.${form.value.building}` : '';
+    const flat = form.value.flat ? ` кв.${form.value.flat}` : '';
+
+    return `${city}${street}${building}${flat}`.trim();
+  }
+
+  private parseAddressString(value: string | null) {
+    if (!value) return { city: '', street: '', building: '', flat: '' };
+
+    const city = value.match(/г\.(.+?)(?=\sул\.|$)/)?.[1]?.trim() ?? '';
+    const street = value.match(/ул\.(.+?)(?=\sд\.|$)/)?.[1]?.trim() ?? '';
+    const building = value.match(/д\.(.+?)(?=\sкв\.|$)/)?.[1]?.trim() ?? '';
+    const flat = value.match(/кв\.(.+)$/)?.[1]?.trim() ?? '';
+
+    return { city, street, building, flat };
   }
 }

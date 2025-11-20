@@ -84,7 +84,9 @@ function validateDateRange({
       toControl.setErrors({
         dateRange: { message: 'Дата начала не может быть позднее даты конца' },
       });
-      return { dateRange: { message: 'Дата начала не может быть позднее даты конца' } };
+      return {
+        dateRange: { message: 'Дата начала не может быть позднее даты конца' },
+      };
     }
 
     return null;
@@ -92,8 +94,10 @@ function validateDateRange({
 }
 
 function createCompletePhoneInsertionPreprocessor(): MaskitoPreprocessor {
-  const trimPrefix = (value: string): string => value.replace(/^(\+?7?\s?8?)\s?/, '');
-  const countDigits = (value: string): number => value.replaceAll(/\D/g, '').length;
+  const trimPrefix = (value: string): string =>
+    value.replace(/^(\+?7?\s?8?)\s?/, '');
+  const countDigits = (value: string): number =>
+    value.replaceAll(/\D/g, '').length;
 
   return ({ elementState, data }) => {
     const { value, selection } = elementState;
@@ -124,7 +128,10 @@ export class FormsExperimentalComponent {
     plugins: [
       maskitoAddOnFocusPlugin('+7 '),
       maskitoRemoveOnBlurPlugin('+7 '),
-      maskitoCaretGuard((value, [from, to]) => [from === to ? '+7 '.length : 0, value.length]),
+      maskitoCaretGuard((value, [from, to]) => [
+        from === to ? '+7 '.length : 0,
+        value.length,
+      ]),
     ],
     preprocessors: [createCompletePhoneInsertionPreprocessor()],
   };
@@ -157,10 +164,6 @@ export class FormsExperimentalComponent {
       .getAddresses()
       .pipe(takeUntilDestroyed())
       .subscribe(addrs => {
-        // while (this.form.controls.addresses.controls.length > 0) {
-        //   this.form.controls.addresses.removeAt(0);
-        // }
-
         this.form.controls.addresses.clear();
 
         for (const addr of addrs) {
@@ -178,22 +181,27 @@ export class FormsExperimentalComponent {
 
         for (const feature of features) {
           if (feature.code != null) {
-            this.form.controls.feature.addControl(feature.code, new FormControl(feature.value));
+            this.form.controls.feature.addControl(
+              feature.code,
+              new FormControl(feature.value)
+            );
           }
         }
       });
 
-    this.form.controls.type.valueChanges.pipe(takeUntilDestroyed()).subscribe(val => {
-      this.form.controls.inn.clearValidators();
-      if (val === ReceiverType.LEGAL) {
-        this.form.controls.inn.setValidators([
-          Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(10),
-        ]);
-      }
-      this.form.controls.inn.updateValueAndValidity();
-    });
+    this.form.controls.type.valueChanges
+      .pipe(takeUntilDestroyed())
+      .subscribe(val => {
+        this.form.controls.inn.clearValidators();
+        if (val === ReceiverType.LEGAL) {
+          this.form.controls.inn.setValidators([
+            Validators.required,
+            Validators.minLength(10),
+            Validators.maxLength(10),
+          ]);
+        }
+        this.form.controls.inn.updateValueAndValidity();
+      });
   }
 
   onSubmit(event: SubmitEvent) {
@@ -202,8 +210,6 @@ export class FormsExperimentalComponent {
     this.form.updateValueAndValidity();
 
     if (this.form.invalid) return;
-    console.log(this.form.valid);
-    console.log(this.form.value);
   }
 
   addAddress() {
