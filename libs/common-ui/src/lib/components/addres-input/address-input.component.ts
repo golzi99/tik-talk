@@ -57,8 +57,19 @@ export class AddressInputComponent implements ControlValueAccessor {
   );
 
   writeValue(val: string): void {
+    const splitVal = val
+      ? val.split(' ').map(val => {
+          return val.split('.')[1];
+        })
+      : [];
     this.innerSearchControl.patchValue(val, {
       emitEvent: false,
+    });
+    this.addressForm.patchValue({
+      city: splitVal[0] || '',
+      street: splitVal[1] || '',
+      building: splitVal[2] || '',
+      flat: splitVal[3] || '',
     });
   }
 
@@ -77,6 +88,7 @@ export class AddressInputComponent implements ControlValueAccessor {
   onTouched() {}
 
   onSuggestionPick(suggest: AddressSuggestion) {
+    const fullAddress = `г.${suggest.data.city} ул.${suggest.data.street} д.${suggest.data.house} кв.${suggest.data.flat}`;
     this.isDropDownOpened.set(false);
     this.addressForm.patchValue({
       city: suggest.data.city,
@@ -84,9 +96,12 @@ export class AddressInputComponent implements ControlValueAccessor {
       building: suggest.data.house,
       flat: suggest.data.flat,
     });
-    this.innerSearchControl.patchValue(`${suggest.data.city}`, {
-      emitEvent: false,
-    });
-    this.onChange(suggest.data.city);
+    this.innerSearchControl.patchValue(
+      `г.${suggest.data.city} ул.${suggest.data.street} д.${suggest.data.house} кв.${suggest.data.flat}`,
+      {
+        emitEvent: false,
+      }
+    );
+    this.onChange(fullAddress);
   }
 }
