@@ -48,6 +48,12 @@ export class SettingsPageComponent {
     description: new FormControl(''),
     stack: new FormControl<string[]>([]),
     city: new FormControl<string | null>(null),
+    fullAddress: new FormGroup({
+      city: new FormControl(''),
+      street: new FormControl(''),
+      building: new FormControl(''),
+      flat: new FormControl(''),
+    }),
   });
 
   constructor() {

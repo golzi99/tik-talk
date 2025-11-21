@@ -19,6 +19,8 @@ export class AddressPipe implements PipeTransform {
       ? `${value.data.flat_type}${value.data.flat}`
       : '';
 
-    return `${city} ${street} ${house} ${flat}`.trim();
+    return value.data.city
+      ? `${city} ${street} ${house} ${flat}`.trim()
+      : value.value;
   }
 }

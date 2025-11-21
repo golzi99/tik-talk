@@ -60,7 +60,6 @@ export class AddressInputComponent implements ControlValueAccessor {
   writeValue(val: string): void {
     const parsed = this.parseAddressString(val);
     this.addressForm.patchValue(parsed, { emitEvent: false });
-    this.innerSearchControl.patchValue(val, { emitEvent: false });
   }
 
   registerOnChange(fn: any): void {
@@ -105,10 +104,8 @@ export class AddressInputComponent implements ControlValueAccessor {
   constructor() {
     this.addressForm.valueChanges
       .pipe(debounceTime(200), takeUntilDestroyed())
-      .subscribe(value => {
-        const newString = this.composeAddressString(this.addressForm);
-        this.innerSearchControl.patchValue(newString, { emitEvent: false });
-        this.onChange(newString);
+      .subscribe(() => {
+        this.onChange(this.composeAddressString(this.addressForm));
       });
   }
 
