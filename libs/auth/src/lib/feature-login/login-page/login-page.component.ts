@@ -11,12 +11,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SvgIcon } from '@tt/common-ui';
+import { SvgIcon, TtInputComponent } from '@tt/common-ui';
 import { AuthService } from '@tt/data-access/auth-api';
 
 @Component({
   selector: 'app-login-page',
-  imports: [ReactiveFormsModule, SvgIcon],
+  imports: [ReactiveFormsModule, SvgIcon, TtInputComponent],
   templateUrl: './login-page.component.html',
   standalone: true,
   styleUrl: './login-page.component.scss',

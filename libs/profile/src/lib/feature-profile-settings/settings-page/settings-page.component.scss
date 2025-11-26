@@ -12,6 +12,7 @@
   background-color: var(--dark-color);
   padding: 32px;
   height: calc(100dvh - (24px * 2));
+  overflow-y: scroll;
 }
 
 .profile-form {

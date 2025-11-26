@@ -22,6 +22,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   if (!token) return next(req);
 
+  if (req.url.includes('dadata.ru')) return next(req);
+
   if (isRefreshing$.value) {
     return refreshAndProceed({ req, next, authService });
   }

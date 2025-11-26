@@ -16,7 +16,7 @@ import { firstValueFrom } from 'rxjs';
 import { ProfileService } from '@tt/data-access/profile-api';
 import { Store } from '@ngrx/store';
 import { globalActions, selectMe } from '@tt/data-access/global-store';
-import { StackInputComponent } from '@tt/common-ui';
+import { AddressInputComponent, StackInputComponent } from '@tt/common-ui';
 
 @Component({
   selector: 'app-settings-page',
@@ -25,6 +25,7 @@ import { StackInputComponent } from '@tt/common-ui';
     ReactiveFormsModule,
     AvatarUploadComponent,
     StackInputComponent,
+    AddressInputComponent,
   ],
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.scss',
@@ -46,6 +47,13 @@ export class SettingsPageComponent {
     ]),
     description: new FormControl(''),
     stack: new FormControl<string[]>([]),
+    city: new FormControl<string | null>(null),
+    fullAddress: new FormGroup({
+      city: new FormControl(''),
+      street: new FormControl(''),
+      building: new FormControl(''),
+      flat: new FormControl(''),
+    }),
   });
 
   constructor() {
